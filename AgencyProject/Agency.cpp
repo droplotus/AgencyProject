@@ -259,9 +259,8 @@ void Agency::fillPacks(string fileName, string &last_id){
 
 Agency::Agency(){}
 
-Agency::Agency(vector<Client> &clients, vector<Packet> &packets, string &last_id){
+Agency::Agency(string fileName, vector<Client> &clients, vector<Packet> &packets, string &last_id){
   ifstream agencyFile;
-  string fileName = "agency.txt";
   agencyFile.open(fileName);
 
   if(!agencyFile){

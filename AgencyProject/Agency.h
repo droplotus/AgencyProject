@@ -26,7 +26,7 @@ class Agency{
 
  public:
   Agency();
-  Agency(vector<Client> &clients, vector<Packet> &packets, string &last_id);
+  Agency(string fileName, vector<Client> &clients, vector<Packet> &packets, string &last_id);
 
   // methods GET
   int findTpByID(string id) const;
