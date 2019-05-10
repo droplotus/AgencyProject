@@ -7,3 +7,4 @@ void menuPack(Agency &agency);
 void menuInformation(Agency &agency);
 void menuHelp(Agency &agency);
 unsigned mainMenu(Agency &agency);
+void showTps(vector<Packet> tps_arr);

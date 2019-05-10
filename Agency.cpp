@@ -1,5 +1,114 @@
 #include "Agency.h"
 
+string Agency::dateToStr(Date date) const{
+	return date.getYear() + "/" + date.getMonth() + "/" + date.getDay();
+}
+
+vector<Packet> Agency::showTravelPacksByDatesAndPlace(string place, string date1, string date2) const{
+	vector<Packet> tps_by_place_and_date = showTravelPacksByDates(date1, date2);
+	return showTravelPacksByPlace(tps_by_place_and_date, place);
+}
+
+vector<Packet> Agency::showTravelPacksByDates(string date1, string date2) const{
+	vector<Packet> tps_by_date;
+	vector<string> date_1_arr;
+	vector<string> date_2_arr;
+
+	string date_1_temp = date1;
+	string date_2_temp = date2;
+
+	size_t found_1 = date1.find_first_of('/');
+	parseText(date1, found_1, date_1_arr, '/');
+	found_1 = date2.find_first_of('/');
+	parseText(date2, found_1, date_2_arr, '/');
+
+	date1 = date_1_temp;
+	date2 = date_2_temp;
+
+	for(int i=0; i<packets.size(); i++){
+		if(stoi(packets[i].getId()) < 0) continue;
+		if(date1 <= dateToStr(packets[i].getBeginDate()) && date2 >= dateToStr(packets[i].getEndDate()))
+			tps_by_date.push_back(packets[i]);
+	}
+	
+	return tps_by_date;
+}
+
+vector<Packet> Agency::showTravelPacksByPlace(vector<Packet> tp, string place) const{
+	vector<Packet> tps_by_place;
+
+	for(int i=0; i<tp.size(); i++)
+		if(tp[i].getSites().at(0) == place) tps_by_place.push_back(tp[i]);
+
+	return tps_by_place;
+}
+
+void Agency::showTravelPacksFromAllClients(){
+	vector<Packet> tps_arr;
+	vector<string> id_packs_arr;
+
+	// fetchin all the ID's I have for each client
+	for(int i=0; i<clients.size(); i++)
+		for(int j=0; j<clients[i].getPacketList().size(); j++)
+			id_packs_arr.push_back(clients[i].getPacketList().at(j));
+
+	// erasing all the same ID's I have in the vector
+	for(int i=id_packs_arr.size()-1; i>0; i--)
+		for(int j=i-1; j>=0; j--)
+			if(id_packs_arr[i] == id_packs_arr[j]) id_packs_arr.erase(id_packs_arr.begin() + j);
+
+	// adding them to a tps_arr so I can display them with showTPS(), using abs() because of the negative ID's
+	for(int i=0; i<packets.size(); i++)
+		for(int j=0; j<id_packs_arr.size(); j++)
+			if(abs(stoi(packets[i].getId())) == abs(stoi(id_packs_arr[j]))) tps_arr.push_back(packets[i]);
+
+	showTps(tps_arr);
+
+	cout << "\t\t[1] Retroceder" << endl << endl;
+	cout << "Opcao: ";
+	string option = "-1";
+	while(option != "1"){
+		getline(cin, option);
+		if(option != "1") cout << "Esta opcao nao existe, tente outra: ";
+	}
+}
+
+void Agency::showTravelPacksFromClient(string nif){
+	vector<Packet> tps_arr;
+	vector<string> id_packs_arr;
+	int index;
+	bool found = false;
+	do{
+		for(int i=0; i<clients.size(); i++){
+			if(clients[i].getVATnumber() == nif){
+				found = true;
+				index = i;
+				break;
+			}
+		}
+		if(!found){
+			cout << "Nao existe ninguem com este NIF, escolha outro: ";
+			getline(cin, nif);
+		}
+	} while(!found);
+
+	id_packs_arr = clients[index].getPacketList();
+
+	for(int i=0; i<packets.size(); i++)
+		for(int j=0; j<id_packs_arr.size(); j++)
+			if(abs(stoi(packets[i].getId())) == abs(stoi(id_packs_arr[j]))) tps_arr.push_back(packets[i]);
+
+	showTps(tps_arr);
+
+	cout << "\t\t[1] Retroceder" << endl << endl;
+	cout << "Opcao: ";
+	string option = "-1";
+	while(option != "1"){
+		getline(cin, option);
+		if(option != "1") cout << "Esta opcao nao existe, tente outra: ";
+	}
+}
+
 void Agency::showTps(vector<Packet> tps_arr){
   cout << endl << std::left << std::setfill(' ') << std::setw(8) << "\tID" << std::setw(56) << "destino(s)" << std::setw(24) << "data inicial" << std::setw(16) << "data final" << std::setw(9) << "preco" << std::setw(11) << "bilhetes" << "comprados" << endl;
   cout << "\t--------------------------------------------------------------------------------------------------------------------------------------";
@@ -33,7 +142,7 @@ int Agency::findTpByID(string id) const{
 void Agency::fillClients(string fileName){
   ifstream clientsFile;
   clientsFile.open(fileName);
-  // -if file cannot be opened for some reason, return me an error.
+  // - if file cannot be opened for some reason, return me an error.
   if(!clientsFile){
     cerr << "Unable to open file clients.txt" << endl;
     exit(1);
@@ -150,8 +259,9 @@ void Agency::fillPacks(string fileName, string &last_id){
 
 Agency::Agency(){}
 
-Agency::Agency(string fileName, vector<Client> &clients, vector<Packet> &packets, string &last_id){
+Agency::Agency(vector<Client> &clients, vector<Packet> &packets, string &last_id){
   ifstream agencyFile;
+  string fileName = "agency.txt";
   agencyFile.open(fileName);
 
   if(!agencyFile){

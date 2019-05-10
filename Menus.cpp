@@ -3,6 +3,17 @@ using namespace std;
 
 string choice;
 
+void showAllTravelPacks(Agency agency){
+	agency.showTps(agency.getPackets());
+	cout << "\t\t[1] Retroceder" << endl << endl;
+	cout << "Opcao: ";
+	string option = "-1";
+	while(option != "1"){
+		getline(cin, option);
+		if(option != "1") cout << "Esta opcao nao existe, tente outra: ";
+	}
+}
+
 void showTravelPacks(Agency &agency){
 	cout << endl << endl;
 	cout << "\t _______________________________________________________________________" 	<< endl;
@@ -25,13 +36,14 @@ void showTravelPacks(Agency &agency){
 	do{
 		if(choice == "1"){
 			accepted = true;
-			showAllTravelPacks();
+			showAllTravelPacks(agency);
+			menuInformation(agency);
 		}else if(choice == "2"){
 			accepted = true;
 			string place;
 			cout << "Escolha um destino: ";
 			getline(cin, place);
-			showTps(showTravelPacksByPlace(tps, place));
+			agency.showTps(agency.showTravelPacksByPlace(agency.getPackets(), place));
 			cout << "\t\t[1] Retroceder" << endl << endl;
 			cout << "Opcao: ";
 			string option = "-1";
@@ -39,7 +51,7 @@ void showTravelPacks(Agency &agency){
 				getline(cin, option);
 				if(option != "1") cout << "Esta opcao nao existe, tente outra: ";
 			}
-			menuInformation();
+			menuInformation(agency);
 		}else if(choice == "3"){
 			accepted = true;
 			string date_1, date_2;
@@ -47,7 +59,7 @@ void showTravelPacks(Agency &agency){
 			getline(cin, date_1);
 			cout << "Escolha uma data final: ";
 			getline(cin, date_2);
-			showTps(showTravelPacksByDates(date_1, date_2));
+			agency.showTps(agency.showTravelPacksByDates(date_1, date_2));
 			cout << "\t\t[1] Retroceder" << endl << endl;
 			cout << "Opcao: ";
 			string option = "-1";
@@ -55,7 +67,7 @@ void showTravelPacks(Agency &agency){
 				getline(cin, option);
 				if(option != "1") cout << "Esta opcao nao existe, tente outra: ";
 			}
-			menuInformation();
+			menuInformation(agency);
 		}else if(choice == "4"){
 			accepted = true;
 			string date_1, date_2, place;
@@ -65,7 +77,7 @@ void showTravelPacks(Agency &agency){
 			getline(cin, date_2);
 			cout << "Escolha um destino: ";
 			getline(cin, place);
-			showTps(showTravelPacksByDatesAndPlace(place, date_1, date_2));
+			agency.showTps(agency.showTravelPacksByDatesAndPlace(place, date_1, date_2));
 			cout << "\t\t[1] Retroceder" << endl << endl;
 			cout << "Opcao: ";
 			string option = "-1";
@@ -73,19 +85,21 @@ void showTravelPacks(Agency &agency){
 				getline(cin, option);
 				if(option != "1") cout << "Esta opcao nao existe, tente outra: ";
 			}
-			menuInformation();
+			menuInformation(agency);
 		}else if(choice == "5"){
 			accepted = true;
 			string nif;
 			cout << "Escolha o NIF do cliente desejado: ";
 			getline(cin, nif);
-			showTravelPacksFromClient(nif);
+			agency.showTravelPacksFromClient(nif);
+			menuInformation(agency);
 		}else if(choice == "6"){
 			accepted = true;
-			showTravelPacksFromAllClients();
+			agency.showTravelPacksFromAllClients();
+			menuInformation(agency);
 		}else if(choice == "7"){
 			accepted = true;
-			menuInformation();
+			menuInformation(agency);
 		}else if(choice == "0"){
 			exit(0);
 		}else{
