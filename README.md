@@ -11,9 +11,25 @@ University PROG second project
 - Comando usado para o abrir:
         ./test
 
-### OBSERVACOES  
+#### OBSERVACOES  
 - Se tiver a bugar algumas opcoes, ter em conta que eu nao testei infinitas vezes para ver se está tudo bem ou nao, se tiver alguns problemas(o que eu nao encontrei enquanto testava), inicialize ja com clientes e packs
 - Nao usar NUNCA characters speciais no packs.txt e no clients.txt porque lixa-me o std::set(w), cada char especial ocupa 2 espacos..
         
-### BUGS
+#### BUGS
 - As vezes encontro bugs a reescrever a morada depois de apagar ou adicionar clientes, ou entao bug a criar um cliente perfeito e diz aquele erro do bumped 0 nao sei que
+
+#### MENU PROGRESS
+- [x] menuClient
+- [x] menuPack
+- [x] menuInformation
+  - [x] showClient
+  - [x] showClients
+  - [x] showTravelPack
+  - [ ] showTravelPacks
+    - [ ] showTravelPacksByPlace
+    - [ ] showTravelPacksByDates
+    - [ ] showTravelPacksByDatesAndPlace
+    - [ ] showTravelPacksFromClient
+    - [ ] showTravelPacksFromAllClients
+- [x] buyTravelPacks
+- [x] menuHelp
