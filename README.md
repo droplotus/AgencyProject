@@ -25,11 +25,6 @@ University PROG second project
   - [x] showClient
   - [x] showClients
   - [x] showTravelPack
-  - [ ] showTravelPacks
-    - [ ] showTravelPacksByPlace
-    - [ ] showTravelPacksByDates
-    - [ ] showTravelPacksByDatesAndPlace
-    - [ ] showTravelPacksFromClient
-    - [ ] showTravelPacksFromAllClients
+  - [x] showTravelPacks
 - [x] buyTravelPacks
 - [x] menuHelp
