@@ -22,9 +22,10 @@ University PROG second project
 - [x] menuClient
 - [x] menuPack
 - [x] menuInformation
-  - [x] showClient
-  - [x] showClients
-  - [x] showTravelPack
-  - [x] showTravelPacks
 - [x] buyTravelPacks
 - [x] menuHelp
+
+#### EXTRA
+- [ ] new project methods
+- [ ] ALT+Z to always cancel an operation
+- [ ] polish program
