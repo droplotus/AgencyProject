@@ -1,6 +1,5 @@
 Duvidas:
 1. No showTravelPacksByDate dá para comparar as datas com <= e >=?
-2. No createClient para que serve o offset?
 
 Ateracoes:
 1. No showTravelPacksFromAllClients mudei o ciclo de apagar os repetidos
@@ -9,5 +8,4 @@ Ateracoes:
 4. implementei o construtor de client
 5. alterei a função parseText para uma forma mais simples
 
-Deixei a meio de arranjar o createClient para nao crashar com moradas erradas
 
