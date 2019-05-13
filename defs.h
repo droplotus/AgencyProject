@@ -15,7 +15,7 @@ bool isEmpty(std::ifstream& file);
 void cleanSpaces(string& name);
 
 // this function parses a text, dividing it by a character I choose and storing each parsed text into a vector
-void parseText(string& var, size_t found_1, vector<string>& arr, char c);
+void parseText(string var, size_t found_1, vector<string>& arr, char c);
 
 string packToStr(vector<string> packs_arr);
 
