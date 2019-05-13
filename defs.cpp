@@ -26,7 +26,10 @@ void parseText(string var, size_t found_1, vector<string> & arr, char c) { // - 
 	//// -had to clean spaces in between because text file has a space between each '/'
 	//cleanSpaces(var);
 	//arr.push_back(var);
-	if (var.find_first_of(c) == var.find_last_of(c)) {
+	if (var.size() == 0) {
+		return;
+	}
+	if (var.find(c) == string::npos) {
 		arr.push_back(var);
 		cleanSpaces(arr[0]);
 		return;
@@ -35,7 +38,7 @@ void parseText(string var, size_t found_1, vector<string> & arr, char c) { // - 
 		int ix = var.find(c);
 		arr.push_back(var.substr(0, ix));
 		var = var.substr(ix+1);
-		if (var.find(c) != string::npos) {
+		if (var.find(c) == string::npos) {
 			arr.push_back(var);
 		}
 	} while (var.find(c) != string::npos);
@@ -43,7 +46,6 @@ void parseText(string var, size_t found_1, vector<string> & arr, char c) { // - 
 		cleanSpaces(arr[i]);
 	}
 }
-
 string packToStr(vector<string> packs_arr) {
 	string text = "";
 	if (packs_arr.size() == 1) {
