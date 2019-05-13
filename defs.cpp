@@ -26,14 +26,19 @@ void parseText(string var, size_t found_1, vector<string> & arr, char c) { // - 
 	//// -had to clean spaces in between because text file has a space between each '/'
 	//cleanSpaces(var);
 	//arr.push_back(var);
-	while (var.find(c) != string::npos) {
+	if (var.find_first_of(c) == var.find_last_of(c)) {
+		arr.push_back(var);
+		cleanSpaces(arr[0]);
+		return;
+	}
+	do {
 		int ix = var.find(c);
 		arr.push_back(var.substr(0, ix));
 		var = var.substr(ix+1);
-		if (var.find(c) == string::npos) {
+		if (var.find(c) != string::npos) {
 			arr.push_back(var);
 		}
-	}
+	} while (var.find(c) != string::npos);
 	for (int i = 0; i < arr.size(); i++) {
 		cleanSpaces(arr[i]);
 	}
