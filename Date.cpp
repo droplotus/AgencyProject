@@ -45,3 +45,41 @@ void Date::setMonth(string month) {
 void Date::setYear(string year) {
 	this->year = year;
 }
+
+bool Date::operator>=(Date right)
+{
+	int ly, lm, ld, ry, rm, rd;
+	ly = stoi(year);
+	lm = stoi(month);
+	ld = stoi(day);
+	ry = stoi(right.year);
+	rm = stoi(right.month);
+	rd = stoi(right.day);
+
+	if (ly > ry)
+		return true;
+	if (lm > rm)
+		return true;
+	if (ld >= rd)
+		return true;
+	return false;
+}
+
+bool Date::operator<=(Date right)
+{
+	int ly, lm, ld, ry, rm, rd;
+	ly = stoi(year);
+	lm = stoi(month);
+	ld = stoi(day);
+	ry = stoi(right.year);
+	rm = stoi(right.month);
+	rd = stoi(right.day);
+
+	if (ly < ry)
+		return true;
+	if (lm < rm)
+		return true;
+	if (ld <= rd)
+		return true;
+	return false;
+}
