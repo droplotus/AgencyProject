@@ -5,10 +5,16 @@ Date::Date() {
 
 Date::Date(string date) {
 	vector<string> date_str;
-	date_str.push_back("1000");
-	date_str.push_back("1000");
-	date_str.push_back("1000");
 	parseText(date, 1, date_str, '/');
+	date_str.resize(3);
+	for (int i = 0; i < date_str.size(); i++) {
+		if (date_str[i] == "" || !strIsInt(date_str[i])) {
+			year = "0";
+			month = "0";
+			day = "0";
+			return;
+		}
+	}
 	year = date_str[0];
 	month = date_str[1];
 	day = date_str[2];
