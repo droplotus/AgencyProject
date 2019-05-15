@@ -371,7 +371,6 @@ void Agency::showRecommendations(){
 			}
 			if(!found){
 				string name = clients[i].getName();
-				transform(name.begin(), name.end(), name.begin(), ::toupper);
 				output.push_back("\tPara: " + name + "\t\trecomendamos: " + new_packets[j].getSites().at(0));
 				break;
 			}
@@ -860,7 +859,7 @@ void Agency::editClient(string nif) {
 
 void Agency::createClient() {
 	ofstream clientsFile;
-	string name, nif, family, address_str, packs_str;
+	string name, nif, family, address_str, packs_str, line;
 	int offset = -1;
 	vector<string> text;
 	vector<string> client_address_arr;
@@ -890,7 +889,9 @@ void Agency::createClient() {
 	getline(cin, address_str);
 	if(address_str == ":q") return;
 	text.push_back(address_str);
-	cout << "\tPacote(s) turistico(s): ";
+	cout << "\tPacote(s) turistico(s): " << endl;
+	showTps(packets);
+	cout << "\t";
 	getline(cin, packs_str);
 	if(packs_str == ":q") return;
 	text.push_back(packs_str);
@@ -914,7 +915,29 @@ void Agency::createClient() {
 			text[4 + offset] = address_str;
 			client_address_arr.clear();
 		}
-	} 
+	}		
+									//while é verificação se a morada tem 4 barras
+	for (int i = 0; i < packs_arr.size(); i++) {
+		for (int j = 0; j < packs_arr[i].size(); j++) {
+			while (true) {
+				if (packs_arr[i][j] < 48 || packs_arr[i][j] > 57) {
+					cout << "Pack comprado inserido não é um número! Por favor insira um pack válido(:q para retroceder): ";
+					getline(cin, line);
+					if (line == ":q") return;
+					packs_arr[i] = line;
+					continue;
+				}
+				if (!numberIsID(stoi(packs_arr[i]))) {
+					cout << "Pack comprado inserido não existe! Por favor insira um pack válido(:q para retroceder): ";
+					getline(cin, line);
+					if (line == ":q") return;
+					packs_arr[i] = line;
+					continue;
+				}
+				break;
+			}
+		}
+	}
 	Client client = Client(text[1 + offset], text[2 + offset], text[3 + offset], client_address, packs_arr);
 	clients.push_back(client);
 	
@@ -1018,6 +1041,18 @@ void Agency::buyTravelPack(string nif) {
 		cout << accepted << endl;
 		cout << "Escolha outra opcao: ";
 	}
+}
+
+bool Agency::numberIsID(int n)
+{
+	bool result = false;
+	for (int i = 0; i < packets.size(); i++) {
+		if (n == stoi(packets[i].getId())) {
+			result = true;
+			break;
+		}
+	}
+	return result;
 }
 
 void Agency::updateClientsFile() {

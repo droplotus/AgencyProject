@@ -5,7 +5,6 @@
 #include <vector>
 #include <fstream>
 #include <iomanip>
-#include <bits/stdc++.h>
 
 #include "defs.h"
 #include "Address.h"
@@ -67,6 +66,7 @@ public:
 	void updatePacksFile();
 	void updateClientsFile();
 	void buyTravelPack(string nif);
+	bool numberIsID(int n);
 
 	// methods SET
 	void setName(string name);
