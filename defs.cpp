@@ -1,4 +1,5 @@
 #include "defs.h"
+#include "Date.h"
 
 bool isEmpty(std::ifstream& file) {
 	return file.peek() == std::ifstream::traits_type::eof();
@@ -69,3 +70,26 @@ int findInVecStr(vector<string> vec, string elem) {
 	}
 	return index;
 }	//NOVO!!
+
+bool strIsInt(string n)
+{
+	for (int i = 0; i < n.size(); i++) {
+		if (n[i] < 48 || n[i] > 57) {
+			return false;
+		}
+	}
+	return true;
+}
+
+bool strIsDate(string date)
+{
+	vector<string> date_arr;
+	parseText(date, 1, date_arr, '/');
+	Date date1;
+	if (date_arr.size() == 3) {
+		date1.setDate(date);
+		if (date1.isValid()) return true;
+	}
+	return false;
+}
+

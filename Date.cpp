@@ -4,9 +4,15 @@ Date::Date() {
 }
 
 Date::Date(string date) {
-	
+	vector<string> date_str;
+	date_str.push_back("1000");
+	date_str.push_back("1000");
+	date_str.push_back("1000");
+	parseText(date, 1, date_str, '/');
+	year = date_str[0];
+	month = date_str[1];
+	day = date_str[2];
 }
-
 
 Date::Date(string day, string month, string year) {
 	this->day = day;
@@ -21,7 +27,6 @@ Date::Date(string day, string month, string year) {
 string Date::getDay() const {
 	return day;
 }
-
 
 string Date::getMonth() const {
 	return month;
@@ -38,12 +43,22 @@ string Date::getYear() const {
 void Date::setDay(string day) {
 	this->day = day;
 }
+
 void Date::setMonth(string month) {
 	this->month = month;
 }
 
 void Date::setYear(string year) {
 	this->year = year;
+}
+
+void Date::setDate(string date)
+{
+	vector<string> date_str;
+	parseText(date, 1, date_str, '/');
+	year = date_str[0];
+	month = date_str[1];
+	day = date_str[2];
 }
 
 bool Date::operator>=(Date right)
@@ -83,3 +98,9 @@ bool Date::operator<=(Date right)
 		return true;
 	return false;
 }
+
+bool Date::isValid() {
+	if (!strIsInt(year) || !strIsInt(month) || !strIsInt(day)) return false;
+	return true;
+}
+

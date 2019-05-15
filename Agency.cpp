@@ -648,13 +648,13 @@ void Agency::editTravelPack(string id) {
 
 void Agency::createTravelPack() {
 	ofstream packsFile;
-	string line;
+	string id, local, beginDate, endDate, price, avail, bought;
 	int offset = -1;
 	vector<string> text;
 	vector<string> places;
 	vector<string> begin_date_arr;
 	vector<string> end_date_arr;
-
+	
 	packsFile.open(packs_file, std::ios_base::app);
 	if (packets.size() != 0) {
 		text.push_back("::::::::::");
@@ -664,34 +664,74 @@ void Agency::createTravelPack() {
 	cout << "\t|/    Indique as informacoes seguintes:    (escreva ':q' para cancelar)   |/" << endl;
 	cout << "\to   --------------------------------------------------------------------- o" << endl << endl;
 	cout << "\tID do pack: ";
-	getline(cin, line);
-	if(line == ":q") return;
-	text.push_back(line);
+	getline(cin, id);
+	if(id == ":q") return;
+	text.push_back(id);
 	cout << "\tLocal/locais turistico(s): ";
-	getline(cin, line);
-	if(line == ":q") return;
-	text.push_back(line);
+	getline(cin, local);
+	if(local == ":q") return;
+	text.push_back(local);
 	cout << "\tData de inicio da viagem: ";
-	getline(cin, line);
-	if(line == ":q") return;
-	text.push_back(line);
+	getline(cin, beginDate);
+	if(beginDate == ":q") return;
+	text.push_back(beginDate);
 	cout << "\tData de fim da viagem: ";
-	getline(cin, line);
-	if(line == ":q") return;
-	text.push_back(line);
+	getline(cin, endDate);
+	if(endDate == ":q") return;
+	text.push_back(endDate);
 	cout << "\tPreco por pessoa: ";
-	getline(cin, line);
-	if(line == ":q") return;
-	text.push_back(line);
+	getline(cin, price);
+	if(price == ":q") return;
+	text.push_back(price);
 	cout << "\tBilhetes disponiveis: ";
-	getline(cin, line);
-	if(line == ":q") return;
-	text.push_back(line);
+	getline(cin, avail);
+	if(avail == ":q") return;
+	text.push_back(avail);
 	cout << "\tBilhetes comprados: ";
-	getline(cin, line);
-	if(line == ":q") return;
-	text.push_back(line);
-
+	getline(cin, bought);
+	if(bought == ":q") return;
+	text.push_back(bought);
+	
+	Date bDate(beginDate), eDate(endDate);
+	while (!strIsInt(id)) {
+		cout << "ID não é um número! Insira um novo ID: ";
+		getline(cin, id);
+		if (id == ":q") return;
+		text[1 + offset] = id;
+	}
+	while (!bDate.isValid()) {
+		cout << "Data de início de viagem inválida! Insira uma nova data com o seguinte formato aaaa/mm/dd: ";
+		getline(cin,beginDate);
+		if (beginDate == ":q") return;
+		bDate.setDate(beginDate);
+		text[3 + offset] = beginDate;
+	}
+	while (!eDate.isValid()) {
+		cout << "Data de fim de viagem inválida! Insira uma nova data com o seguinte formato aaaa/mm/dd: ";
+		getline(cin, endDate);
+		if (endDate == ":q") return;
+		eDate.setDate(endDate);
+		text[4 + offset] = endDate;
+	}
+	while (!strIsInt(price)) {
+		cout << "Preço não é um número! Insira um novo preço: ";
+		getline(cin, price);
+		if (price == ":q") return;
+		text[5 + offset] = price;
+	}
+	while (!strIsInt(avail)) {
+		cout << "O valor de Bilhetes disponíveis inseridos nao é um número! Insira um novo valor: ";
+		getline(cin, avail);
+		if (avail == ":q") return;
+		text[6 + offset] = avail;
+	}
+	while (!strIsInt(bought)) {
+		cout << "O valor de Bilhetes comprados inseridos nao é um número! Insira um novo valor: ";
+		getline(cin, bought);
+		if (bought == ":q") return;
+		text[7 + offset] = bought;
+	}
+	
 	string places_str = text[2 + offset];
 	string begin_date_str = text[3 + offset];
 	string end_date_str = text[4 + offset];

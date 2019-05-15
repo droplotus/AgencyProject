@@ -22,3 +22,7 @@ string packToStr(vector<string> packs_arr);
 string placesToStr(vector<string> places);
 
 int findInVecStr(vector<string> vec, string elem);
+
+bool strIsInt(string n);
+
+bool strIsDate(string date);

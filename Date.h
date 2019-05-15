@@ -30,7 +30,10 @@ public:
 	void setDay(string day);
 	void setMonth(string month);
 	void setYear(string year);
+	void setDate(string date);
 
 	bool operator>=(Date right);
 	bool operator<=(Date right);
+
+	bool isValid();
 };
