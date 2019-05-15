@@ -1,80 +1,80 @@
 #include "Packet.h"
 
-Packet::Packet(){}
+Packet::Packet() {}
 
-Packet::Packet(string id, vector<string> sites, Date begin, Date end, string pricePerPerson, string maxPersons, string boughtTickets){
-  this->id = id;
-  this->sites = sites;
-  this->begin = begin;
-  this->end = end;
-  this->pricePerPerson = pricePerPerson;
-  this->maxPersons = maxPersons;
+Packet::Packet(string id, vector<string> sites, Date begin, Date end, string pricePerPerson, string maxPersons, string boughtTickets) {
+	this->id = id;
+	this->sites = sites;
+	this->begin = begin;
+	this->end = end;
+	this->pricePerPerson = pricePerPerson;
+	this->maxPersons = maxPersons;
 }
 
-Packet::Packet(vector<string> sites, Date begin, Date end, string pricePerPerson, string maxPersons){
-  this->sites = sites;
-  this->begin = begin;
-  this->end = end;
-  this->pricePerPerson = pricePerPerson;
-  this->maxPersons = maxPersons;
+Packet::Packet(vector<string> sites, Date begin, Date end, string pricePerPerson, string maxPersons) {
+	this->sites = sites;
+	this->begin = begin;
+	this->end = end;
+	this->pricePerPerson = pricePerPerson;
+	this->maxPersons = maxPersons;
 }
-  // metodos GET
+// metodos GET
 
-string Packet::getId() const{
-  return id;
-}
-
-vector<string> Packet::getSites() const{
-  return sites;
+string Packet::getId() const {
+	return id;
 }
 
-Date Packet::getBeginDate() const{
-  return begin;
+vector<string> Packet::getSites() const {
+	return sites;
 }
 
-Date Packet::getEndDate() const{
-  return end;
+Date Packet::getBeginDate() const {
+	return begin;
 }
 
-string Packet::getPricePerPerson() const{
-  return pricePerPerson;
+Date Packet::getEndDate() const {
+	return end;
 }
 
-string Packet::getMaxPersons() const{
-  return maxPersons;
+string Packet::getPricePerPerson() const {
+	return pricePerPerson;
 }
 
-string Packet::getBoughtTickets() const{
-  return boughtTickets;
+string Packet::getMaxPersons() const {
+	return maxPersons;
 }
 
-  // metodos SET
-
-void Packet::setId(string id){
-  this->id = id;
+string Packet::getBoughtTickets() const {
+	return boughtTickets;
 }
 
-void Packet::setSites(vector<string> sites){
-  this->sites = sites;
+// metodos SET
+
+void Packet::setId(string id) {
+	this->id = id;
 }
 
-void Packet::setBeginDate(Date begin){
-  this->begin = begin;
+void Packet::setSites(vector<string> sites) {
+	this->sites = sites;
 }
 
-void Packet::setEndDate(Date end){
-  this->end = end;
+void Packet::setBeginDate(Date begin) {
+	this->begin = begin;
 }
 
-void Packet::setPricePerPerson(string pricePerPerson){
-  this->pricePerPerson = pricePerPerson;
+void Packet::setEndDate(Date end) {
+	this->end = end;
 }
 
-void Packet::setMaxPersons(string maxPersons){
-  this->maxPersons = maxPersons;
+void Packet::setPricePerPerson(string pricePerPerson) {
+	this->pricePerPerson = pricePerPerson;
 }
 
-void Packet::setBoughtTickets(string boughtTickets){
-  this->boughtTickets = boughtTickets;
+void Packet::setMaxPersons(string maxPersons) {
+	this->maxPersons = maxPersons;
+}
+
+void Packet::setBoughtTickets(string boughtTickets) {
+	this->boughtTickets = boughtTickets;
 }
 

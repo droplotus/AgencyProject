@@ -3,259 +3,333 @@ using namespace std;
 
 string choice;
 
-void showAllTravelPacks(Agency agency){
+void showAllTravelPacks(Agency agency) {
 	agency.showTps(agency.getPackets());
-	cout << "\t\t[1] Retroceder" << endl << endl;
-	cout << "Opcao: ";
-	string option = "-1";
-	while(option != "1"){
-		getline(cin, option);
-		if(option != "1") cout << "Esta opcao nao existe, tente outra: ";
-	}
+	// cout << "\t\t[1] Retroceder" << endl << endl;
+	// cout << "Opcao: ";
+	// string option = "-1";
+	// while (option != "1") {
+	// 	getline(cin, option);
+	// 	if (option != "1") cout << "\tEsta opcao nao existe, tente outra: ";
+	// }
+	cout << "\tPresse ENTER para recuar...";
+	string line;
+	getline(cin, line);
 }
 
-void showTravelPacks(Agency &agency){
+void showTravelPacks(Agency & agency) {
 	cout << endl << endl;
-	cout << "\t _______________________________________________________________________" 	<< endl;
-	cout << "\t|\t\t\t\t\t\t\t\t\t|" 									<< endl;
-	cout << "\t|\t[1] Visualizar todos\t\t\t\t\t\t|" 					<< endl;
-	cout << "\t|\t[2] Visualizar todos com mesmo destino\t\t\t\t|" 					<< endl;
-	cout << "\t|\t[3] Visualizar todos entre duas datas\t\t\t\t|" 			<< endl;
-	cout << "\t|\t[4] Visualizar todos entre duas datas + mesmo destino\t\t|" 			<< endl;
-	cout << "\t|\t[5] Visualizar vendidos a um cliente\t\t\t\t|" 			<< endl;
-	cout << "\t|\t[6] Visualizar vendidos a todos os clientes\t\t\t|" 			<< endl;
-	cout << "\t|\t[7] Retroceder\t\t\t\t\t\t\t|" 			<< endl;
+	cout << "\t _______________________________________________________________________" << endl;
 	cout << "\t|\t\t\t\t\t\t\t\t\t|" << endl;
-	cout << "\t|\t[0] SAIR\t\t\t\t\t\t\t|" 			<< endl;
+	cout << "\t|\t[1] Visualizar todos\t\t\t\t\t\t|" << endl;
+	cout << "\t|\t[2] Visualizar todos com mesmo destino\t\t\t\t|" << endl;
+	cout << "\t|\t[3] Visualizar todos entre duas datas\t\t\t\t|" << endl;
+	cout << "\t|\t[4] Visualizar todos entre duas datas + mesmo destino\t\t|" << endl;
+	cout << "\t|\t[5] Visualizar vendidos a um cliente\t\t\t\t|" << endl;
+	cout << "\t|\t[6] Visualizar vendidos a todos os clientes\t\t\t|" << endl;
+	cout << "\t|\t[7] Retroceder\t\t\t\t\t\t\t|" << endl;
+	cout << "\t|\t\t\t\t\t\t\t\t\t|" << endl;
+	cout << "\t|\t[0] SAIR\t\t\t\t\t\t\t|" << endl;
 	cout << "\t|_______________________________________________________________________|" << endl << endl;
 	cout << "Opção: ";
 
 	bool accepted = false;
 	getline(cin, choice);
 
-	do{
-		if(choice == "1"){
+	do {
+		if (choice == "1") {
 			accepted = true;
 			showAllTravelPacks(agency);
 			menuInformation(agency);
-		}else if(choice == "2"){
+		}
+		else if (choice == "2") {
 			accepted = true;
 			string place;
-			cout << "Escolha um destino: ";
+			cout << endl << "\tEscolha um destino (escreva ':q' para cancelar): ";
 			getline(cin, place);
+			if(place == ":q") showTravelPacks(agency);
 			agency.showTps(agency.showTravelPacksByPlace(agency.getPackets(), place));
-			cout << "\t\t[1] Retroceder" << endl << endl;
-			cout << "Opcao: ";
-			string option = "-1";
-			while(option != "1"){
-				getline(cin, option);
-				if(option != "1") cout << "Esta opcao nao existe, tente outra: ";
-			}
+			cout << "\tPresse ENTER para recuar...";
+			string line;
+			getline(cin, line);
 			menuInformation(agency);
-		}else if(choice == "3"){
+		}
+		else if (choice == "3") {
 			accepted = true;
 			string date_1, date_2;
-			cout << "Escolha uma data inicial: ";
+			cout << "\t,-, -------------------------------- ,-," << endl;
+			cout << "\t|/    (escreva ':q' para cancelar)   |/" << endl;
+			cout << "\to   -------------------------------- o" << endl << endl;
+			cout << "\tEscolha uma data inicial: ";
 			getline(cin, date_1);
-			cout << "Escolha uma data final: ";
+			if(date_1 == ":q") showTravelPacks(agency);
+			cout << "\tEscolha uma data final: ";
 			getline(cin, date_2);
+			if(date_2 == ":q") showTravelPacks(agency);
 			agency.showTps(agency.showTravelPacksByDates(date_1, date_2));
-			cout << "\t\t[1] Retroceder" << endl << endl;
-			cout << "Opcao: ";
-			string option = "-1";
-			while(option != "1"){
-				getline(cin, option);
-				if(option != "1") cout << "Esta opcao nao existe, tente outra: ";
-			}
+			cout << "\tPresse ENTER para recuar...";
+			string line;
+			getline(cin, line);
 			menuInformation(agency);
-		}else if(choice == "4"){
+		}
+		else if (choice == "4") {
 			accepted = true;
 			string date_1, date_2, place;
-			cout << "Escolha uma data inicial: ";
+			cout << "\t,-, -------------------------------- ,-," << endl;
+			cout << "\t|/    (escreva ':q' para cancelar)   |/" << endl;
+			cout << "\to   -------------------------------- o" << endl << endl;
+			cout << "\tEscolha uma data inicial: ";
 			getline(cin, date_1);
-			cout << "Escolha uma data final: ";
+			if(date_1 == ":q") showTravelPacks(agency);
+			cout << "\tEscolha uma data final: ";
 			getline(cin, date_2);
-			cout << "Escolha um destino: ";
+			if(date_2 == ":q") showTravelPacks(agency);
+			cout << "\tEscolha um destino: ";
 			getline(cin, place);
+			if(place == ":q") showTravelPacks(agency);
 			agency.showTps(agency.showTravelPacksByDatesAndPlace(place, date_1, date_2));
-			cout << "\t\t[1] Retroceder" << endl << endl;
-			cout << "Opcao: ";
-			string option = "-1";
-			while(option != "1"){
-				getline(cin, option);
-				if(option != "1") cout << "Esta opcao nao existe, tente outra: ";
-			}
+			cout << "\tPresse ENTER para recuar...";
+			string line;
+			getline(cin, line);
 			menuInformation(agency);
-		}else if(choice == "5"){
+		}
+		else if (choice == "5") {
 			accepted = true;
 			string nif;
-			cout << "Escolha o NIF do cliente desejado: ";
+			cout << endl << "\tEscolha o NIF do cliente desejado (escreva ':q' para cancelar): ";
 			getline(cin, nif);
+			if(nif == ":q") showTravelPacks(agency);
 			agency.showTravelPacksFromClient(nif);
 			menuInformation(agency);
-		}else if(choice == "6"){
+		}
+		else if (choice == "6") {
 			accepted = true;
 			agency.showTravelPacksFromAllClients();
 			menuInformation(agency);
-		}else if(choice == "7"){
+		}
+		else if (choice == "7") {
 			accepted = true;
 			menuInformation(agency);
-		}else if(choice == "0"){
+		}
+		else if (choice == "0") {
 			exit(0);
-		}else{
+		}
+		else {
 			accepted = false;
-			cout << "Esta opcao nao e possivel, escolha outra: ";
+			cout << "\tEsta opcao nao e possivel, escolha outra: ";
 			getline(cin, choice);
 		}
-	} while(!accepted);
+	} while (!accepted);
 }
 
-void menuClient(Agency &agency){
-	cout << "\t _______________________________________________" 	<< endl;
-	cout << "\t|\t\t\t\t\t\t|" 									<< endl;
-	cout << "\t|\t[1] Adicionar cliente\t\t\t|" 					<< endl;
-	cout << "\t|\t[2] Modificar cliente\t\t\t|" 			<< endl;
-	cout << "\t|\t[3] Remover cliente\t\t\t|" 			<< endl;
-	cout << "\t|\t[4] Retroceder\t\t\t\t|" 			<< endl;
+void menuClient(Agency & agency) {
+	cout << "\t _______________________________________________" << endl;
 	cout << "\t|\t\t\t\t\t\t|" << endl;
-	cout << "\t|\t[0] SAIR\t\t\t\t|" 			<< endl;
+	cout << "\t|\t[1] Adicionar cliente\t\t\t|" << endl;
+	cout << "\t|\t[2] Modificar cliente\t\t\t|" << endl;
+	cout << "\t|\t[3] Remover cliente\t\t\t|" << endl;
+	cout << "\t|\t[4] Retroceder\t\t\t\t|" << endl;
+	cout << "\t|\t\t\t\t\t\t|" << endl;
+	cout << "\t|\t[0] SAIR\t\t\t\t|" << endl;
 	cout << "\t|_______________________________________________|" << endl << endl;
 	cout << "Opcao: ";
 
 	bool accepted = false;
 	getline(cin, choice);
 
-	do{
-		if(choice == "1"){
+	do {
+		if (choice == "1") {
 			accepted = true;
 			agency.createClient();
 			menuClient(agency);
-		}else if(choice == "2"){
+		}
+		else if (choice == "2") {
 			accepted = true;
-			cout << "Escolha o NIF do cliente a alterar: ";
+			cout << "\tEscolha o NIF do cliente a alterar (escreva ':q' para cancelar): ";
 			string nif;
 			getline(cin, nif);
-			agency.editClient(nif);
+			if(nif != ":q")
+				agency.editClient(nif);
 			menuClient(agency);
-		}else if(choice == "3"){
+		}
+		else if (choice == "3") {
 			accepted = true;
-			cout << "Escolha o NIF do cliente a remover: ";
+			cout << "\tEscolha o NIF do cliente a remover (escreva ':q' para cancelar): ";
 			string nif;
 			getline(cin, nif);
-			agency.removeClient(nif);
+			if(nif != ":q")
+				agency.removeClient(nif);
 			menuClient(agency);
-		}else if(choice == "4"){
+		}
+		else if (choice == "4") {
 			accepted = true;
 			mainMenu(agency);
-		}else if(choice == "0"){
+		}
+		else if (choice == "0") {
 			exit(0);
-		}else{
-			cout << "Esta opcao nao e possivel, escolha outra: ";
+		}
+		else {
+			cout << "\tEsta opcao nao e possivel, escolha outra: ";
 			getline(cin, choice);
 		}
-	} while(!accepted);
+	} while (!accepted);
 }
 
-void menuPack(Agency &agency){
-	cout << "\t _______________________________________________" 	<< endl;
-	cout << "\t|\t\t\t\t\t\t|" 									<< endl;
-	cout << "\t|\t[1] Adicionar pack\t\t\t|" 					<< endl;
-	cout << "\t|\t[2] Modificar pack\t\t\t|" 			<< endl;
-	cout << "\t|\t[3] Remover pack\t\t\t|" 			<< endl;
-	cout << "\t|\t[4] Retroceder\t\t\t\t|" 			<< endl;
+void menuPack(Agency & agency) {
+	cout << "\t _______________________________________________" << endl;
 	cout << "\t|\t\t\t\t\t\t|" << endl;
-	cout << "\t|\t[0] SAIR\t\t\t\t|" 			<< endl;
+	cout << "\t|\t[1] Adicionar pack\t\t\t|" << endl;
+	cout << "\t|\t[2] Modificar pack\t\t\t|" << endl;
+	cout << "\t|\t[3] Remover pack\t\t\t|" << endl;
+	cout << "\t|\t[4] Retroceder\t\t\t\t|" << endl;
+	cout << "\t|\t\t\t\t\t\t|" << endl;
+	cout << "\t|\t[0] SAIR\t\t\t\t|" << endl;
 	cout << "\t|_______________________________________________|" << endl << endl;
 	cout << "Opcao: ";
 
 	bool accepted = false;
 	getline(cin, choice);
 
-	do{
-		if(choice == "1"){
+	do {
+		if (choice == "1") {
 			accepted = true;
 			agency.createTravelPack();
 			menuPack(agency);
-		}else if(choice == "2"){
+		}
+		else if (choice == "2") {
 			accepted = true;
-			cout << "Escolha o ID do pack a alterar: ";
+			cout << "\tEscolha o ID do pack a alterar (escreva ':q' para cancelar): ";
 			string id;
 			getline(cin, id);
-			agency.editTravelPack(id);
+			if(id != ":q")
+				agency.editTravelPack(id);
 			menuPack(agency);
-		}else if(choice == "3"){
+		}
+		else if (choice == "3") {
 			accepted = true;
-			cout << "Escolha o ID do pack a remover: ";
+			cout << "\tEscolha o ID do pack a remover (escreva ':q' para cancelar): ";
 			string id;
 			getline(cin, id);
-			agency.removeTravelPack(id);
+			if(id != ":q")
+				agency.removeTravelPack(id);
 			menuPack(agency);
-		}else if(choice == "4"){
+		}
+		else if (choice == "4") {
 			mainMenu(agency);
-		}else if(choice == "0"){
+		}
+		else if (choice == "0") {
 			exit(0);
-		}else{
-			cout << "Esta opcao nao e possivel, escolha outra: ";
+		}
+		else {
+			cout << "\tEsta opcao nao e possivel, escolha outra: ";
 			getline(cin, choice);
 		}
-	} while(!accepted);
+	} while (!accepted);
 }
 
-void menuInformation(Agency &agency){
+void menuEstatistics(Agency & agency){
 	cout << endl << endl;
-	cout << "\t _______________________________________________" 	<< endl;
-	cout << "\t|\t\t\t\t\t\t|" 									<< endl;
-	cout << "\t|\t[1] Visualizar cliente\t\t\t|" 					<< endl;
-	cout << "\t|\t[2] Visualizar clientes\t\t\t|" 					<< endl;
-	cout << "\t|\t[3] Visualizar pacote turistico\t\t|" 			<< endl;
-	cout << "\t|\t[4] Visualizar pacotes turisticos\t|" 			<< endl;
-	cout << "\t|\t[5] Retroceder\t\t\t\t|" 			<< endl;
+	cout << "\t _______________________________________________" << endl;
 	cout << "\t|\t\t\t\t\t\t|" << endl;
-	cout << "\t|\t[0] SAIR\t\t\t\t|" 			<< endl;
+	cout << "\t|\t[1] Locais mais visitados\t\t|" << endl;
+	cout << "\t|\t[2] Recomandecoes de viagem\t\t|" << endl;
+	cout << "\t|\t\t\t\t\t\t|" << endl;
+	cout << "\t|\t[3] RETROCEDER\t\t\t\t|" << endl;
+	cout << "\t|\t[0] SAIR\t\t\t\t|" << endl;
 	cout << "\t|_______________________________________________|" << endl << endl;
 	cout << "Opcao: ";
 
 	bool accepted = false;
 	getline(cin, choice);
 
-	do{
-		if(choice == "1"){
+	do {
+		if (choice == "1") {
 			accepted = true;
-			cout << "Escolha o NIF do cliente: ";
+			agency.showTopRatedLocations();
+			menuEstatistics(agency);
+		}
+		else if (choice == "2") {
+			accepted = true;
+			agency.showRecommendations();
+			menuEstatistics(agency);
+		}
+		else if (choice == "3") {
+			mainMenu(agency);
+		}
+		else if (choice == "0") {
+			exit(0);
+		}
+		else {
+			accepted = false;
+			cout << "\tEsta opcao nao e possivel, escolha outra: ";
+			getline(cin, choice);
+		}
+	} while (!accepted);
+}
+
+void menuInformation(Agency & agency) {
+	cout << endl << endl;
+	cout << "\t _______________________________________________" << endl;
+	cout << "\t|\t\t\t\t\t\t|" << endl;
+	cout << "\t|\t[1] Visualizar cliente\t\t\t|" << endl;
+	cout << "\t|\t[2] Visualizar clientes\t\t\t|" << endl;
+	cout << "\t|\t[3] Visualizar pacote turistico\t\t|" << endl;
+	cout << "\t|\t[4] Visualizar pacotes turisticos\t|" << endl;
+	cout << "\t|\t[5] Retroceder\t\t\t\t|" << endl;
+	cout << "\t|\t\t\t\t\t\t|" << endl;
+	cout << "\t|\t[0] SAIR\t\t\t\t|" << endl;
+	cout << "\t|_______________________________________________|" << endl << endl;
+	cout << "Opcao: ";
+
+	bool accepted = false;
+	getline(cin, choice);
+
+	do {
+		if (choice == "1") {
+			accepted = true;
+			cout << endl << "\tEscolha o NIF do cliente (escreva ':q' para cancelar): ";
 			string nif;
 			getline(cin, nif);
-			agency.showClient(nif);
+			if(nif != ":q")
+				agency.showClient(nif);
 			menuInformation(agency);
-		}else if(choice == "2"){
+		}
+		else if (choice == "2") {
 			accepted = true;
 			agency.showAllClients();
 			menuInformation(agency);
-		}else if(choice == "3"){
+		}
+		else if (choice == "3") {
 			accepted = true;
-			cout << "Escolha o ID do pack: ";
+			cout << "\tEscolha o ID do pack (escreva ':q' para cancelar): ";
 			string id;
 			getline(cin, id);
-			agency.showTravelPack(id);
+			if(id != ":q")
+				agency.showTravelPack(id);
 			menuInformation(agency);
-		}else if(choice == "4"){
+		}
+		else if (choice == "4") {
 			accepted = true;
 			showTravelPacks(agency);
-		}else if(choice == "5"){
+		}
+		else if (choice == "5") {
 			accepted = true;
 			mainMenu(agency);
-		}else if(choice == "0"){
+		}
+		else if (choice == "0") {
 			exit(0);
-		}else{
+		}
+		else {
 			accepted = false;
-			cout << "Esta opcao nao e possivel, escolha outra: ";
+			cout << "\tEsta opcao nao e possivel, escolha outra: ";
 			getline(cin, choice);
 		}
-	} while(!accepted);
+	} while (!accepted);
 }
 
-void menuHelp(Agency &agency){
+void menuHelp(Agency & agency) {
 	cout << endl << endl;
-	cout << "\t\t _________________________________________________________" 	<< endl;
+	cout << "\t\t _________________________________________________________" << endl;
 	cout << "\t\t|\t\t\t\t\t\t\t  |" << endl;
 	cout << "\t\t|\t\t     ________              _________\t  |" << endl;
 	cout << "\t\t|\t||\t||  ||\t       ||         ||       ||\t  |" << endl;
@@ -286,71 +360,85 @@ void menuHelp(Agency &agency){
 	bool accepted = false;
 	getline(cin, choice);
 
-	do{
-		if(choice == "1"){
+	do {
+		if (choice == "1") {
 			accepted = true;
 			mainMenu(agency);
-		}else if(choice == "0"){
+		}
+		else if (choice == "0") {
 			exit(0);
-		}else{
+		}
+		else {
 			accepted = false;
-			cout << "Esta opcao nao e possivel, escolha outra: ";
+			cout << "\tEsta opcao nao e possivel, escolha outra: ";
 			getline(cin, choice);
 		}
-	} while(!accepted);
+	} while (!accepted);
 }
 
-unsigned mainMenu(Agency &agency){
-
-	cout << endl << endl;
-	cout << "\tAgencia:\t" << agency.getName() << endl;
-	cout << "\tNIF:\t\t" << agency.getVATnumber() << endl;
-	cout << "\tURL:\t\t" << agency.getURL() << endl;
-	cout << "\tEndereco:\t" << agency.getAddress().getStreet() << " / " << agency.getAddress().getDoorNumber() << " / " << agency.getAddress().getFloor() << " / " << agency.getAddress().getPostalCode() << " / " << agency.getAddress().getLocation() << endl << endl;
-	//cout << "\tPacotes vendidos: \t" << totalTravelPacksBought() << endl << "\tValor total: \t\t" << totalIncome() << " €" << endl;
-	cout << "\t _______________________________________________" 	<< endl;
-	cout << "\t|\t\t\t\t\t\t|" 									<< endl;
-	cout << "\t|\t[1] Gestão de clientes\t\t\t|" 					<< endl;
-	cout << "\t|\t[2] Gestão de pacotes turisticos\t|" 			<< endl;
-	cout << "\t|\t[3] visualizacao de informação\t\t|" 			<< endl;
-	cout << "\t|\t[4] Compra de pacotes turisticos\t|" 			<< endl;
-	cout << "\t|\t\t\t\t\t\t|" 			<< endl;
-	cout << "\t|\t[5] AJUDA\t\t\t\t|" 			<< endl;
-	cout << "\t|\t[0] SAIR\t\t\t\t|" 					<< endl;
+unsigned mainMenu(Agency & agency) {
+	cout << endl << endl << endl;
+	cout << "\tAgencia:\t" << agency.getName() << "\t\t\t\t\t       ff" << endl;
+	cout << "\tNIF:\t\t" << agency.getVATnumber() << "\t\t\t\t\t        @@;"<< endl;
+	cout << "\tURL:\t\t" << agency.getURL() << "\t\t\t        .@@@" << endl;
+	cout << "\tEndereco:\t" << agency.getAddress().getStreet() << " / " << agency.getAddress().getDoorNumber() << " / " << agency.getAddress().getFloor() << " / " << agency.getAddress().getPostalCode() << " / " << agency.getAddress().getLocation() << "\t         :@@@:" << endl;
+	cout << "\t\t\t\t\t\t\t\t\t18.       @@@@@" << endl;
+	cout << "\tPacotes vendidos: \t" << agency.totalTravelPacksBought() << "\t\t\t\t\t @@O      ;@@@@@;" << endl << "\tValor total: \t\t" << agency.totalIncome() << " €" << "\t\t\t\t\t:@@@@@@OftfffftfG@@@@@@l>" <<  endl;
+	cout << "\t _______________________________________________" << "\t\t @@O      :@@@@@:" << endl;
+	cout << "\t|\t\t\t\t\t\t|" << "\t\tt8.       @@@@8" << endl;
+	cout << "\t|\t[1] Gestao de clientes\t\t\t|" << "\t\t        1@@@," << endl;
+	cout << "\t|\t[2] Gestao de pacotes turisticos\t|" << "\t\t       ,@@@." << endl;
+	cout << "\t|\t[3] Visualizacao de informação\t\t|" << "\t\t       @@i" << endl;
+	cout << "\t|\t[4] Compra de pacotes turisticos\t|" << "\t\t      ft" << endl;
+	cout << "\t|\t[5] Estatisticas\t\t\t|" << endl;
+	cout << "\t|\t\t\t\t\t\t|" << endl;
+	cout << "\t|\t[6] AJUDA\t\t\t\t|" << "\t         Fly..." << endl;
+	cout << "\t|\t[0] SAIR\t\t\t\t|" << "\t\t\t  ...with us!" << endl;
 	cout << "\t|_______________________________________________|" << endl << endl;
 	cout << "Opcao: ";
 
 	bool accepted = false;
 	getline(cin, choice);
-	
-	do{
-		if(choice == "1"){
+
+	do {
+		if (choice == "1") {
 			accepted = true;
 			menuClient(agency);
-		}else if(choice == "2"){
+		}
+		else if (choice == "2") {
 			accepted = true;
 			menuPack(agency);
-		}else if(choice == "3"){
+		}
+		else if (choice == "3") {
 			accepted = true;
 			menuInformation(agency);
-		}else if(choice == "4"){
+		}
+		else if (choice == "4") {
 			accepted = true;
 			string nif;
-			cout << "Escolha o NIF do cliente que efetua a compra: ";
+			cout << "\tEscolha o NIF do cliente que efetua a compra (escreva ':q' para cancelar): ";
 			getline(cin, nif);
-			agency.buyTravelPack(nif);
+			if(nif != ":q")
+				agency.buyTravelPack(nif);
 			mainMenu(agency);
-		}else if(choice == "5"){
+		}
+		else if (choice == "5") {
+			accepted = true;
+			menuEstatistics(agency);
+		}
+		else if (choice == "6") {
 			accepted = true;
 			menuHelp(agency);
-		}else if(choice == "0"){
+		}
+		else if (choice == "0") {
 			exit(0);
-		}else{
-			cout << "Esta opcao nao e possivel, escolha outra: ";
+		}
+		else {
+			cout << "\tEsta opcao nao e possivel, escolha outra: ";
 			getline(cin, choice);
 		}
-	} while(!accepted);
-	
-  	return 0;
+	} while (!accepted);
+
+	return 0;
 }
-    
+
