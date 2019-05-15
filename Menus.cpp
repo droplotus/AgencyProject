@@ -141,7 +141,8 @@ void menuClient(Agency & agency) {
 		}
 		else if (choice == "2") {
 			accepted = true;
-			cout << "Escolha o NIF do cliente a alterar: ";
+			agency.justShowAllClients();
+			cout << endl << "Escolha o NIF do cliente a alterar: ";
 			string nif;
 			getline(cin, nif);
 			agency.editClient(nif);
@@ -338,7 +339,7 @@ unsigned mainMenu(Agency & agency) {
 	cout << "\t|\t\t\t\t\t\t|" << endl;
 	cout << "\t|\t[1] Gestão de clientes\t\t\t|" << endl;
 	cout << "\t|\t[2] Gestão de pacotes turisticos\t|" << endl;
-	cout << "\t|\t[3] visualizacao de informação\t\t|" << endl;
+	cout << "\t|\t[3] Visualizacao de informação\t|" << endl;
 	cout << "\t|\t[4] Compra de pacotes turisticos\t|" << endl;
 	cout << "\t|\t\t\t\t\t\t|" << endl;
 	cout << "\t|\t[5] AJUDA\t\t\t\t|" << endl;

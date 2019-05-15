@@ -1,4 +1,4 @@
-Joao Pedro Sousa
+Joao Sousa
 691995741
 2
 Rue Xavier Brasseur / 07 / - / 8125-633 / Esch-sur-Alzette
@@ -6,7 +6,7 @@ Rue Xavier Brasseur / 07 / - / 8125-633 / Esch-sur-Alzette
 ::::::::::
 Antonio Sousa
 691553412
-2
+3
 Casa do Carmo / 12 / 12 / 691-123 / Esch-sur-Alzette
 5 ; 1 ; 2 ; 8
 ::::::::::
@@ -14,10 +14,10 @@ Catia Sousa
 691840850
 2
 Rua mal empregue / 16 / - / 1546-568 / Esch-sur-Alzette
-2 ; 3 ; 1 ; 8
+2
 ::::::::::
 Antonio Fonseca
 201304567
 5
 Rua peixoto Cabral / 69 / - / 565-71238 / Lisboa
-2
+2 ; 8 ; 1

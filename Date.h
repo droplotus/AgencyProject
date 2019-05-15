@@ -31,4 +31,7 @@ public:
 	void setMonth(string month);
 	void setYear(string year);
 
+	//COMPARE methods
+
+	bool operator>=(Date right);	bool operator<=(Date right);
 };

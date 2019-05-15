@@ -45,6 +45,7 @@ public:
 	void showTravelPacksFromAllClients();
 	void showTravelPacksFromClient(string nif);
 	void showTravelPack(string id);
+	void justShowAllClients();
 	void showAllClients();
 	void showClient(string nif);
 	void removeTravelPack(string id);

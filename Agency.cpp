@@ -1,4 +1,5 @@
 #include "Agency.h"
+#include "Menus.h"
 
 string Agency::dateToStr(Date date) const {
 	return date.getYear() + "/" + date.getMonth() + "/" + date.getDay();
@@ -13,7 +14,7 @@ vector<Packet> Agency::showTravelPacksByDates(string date1, string date2) const 
 	vector<Packet> tps_by_date;
 	vector<string> date_1_arr;
 	vector<string> date_2_arr;
-
+	Date helpDate1(date1), helpDate2(date2);
 	string date_1_temp = date1;
 	string date_2_temp = date2;
 
@@ -27,7 +28,7 @@ vector<Packet> Agency::showTravelPacksByDates(string date1, string date2) const 
 
 	for (int i = 0; i < packets.size(); i++) {
 		if (stoi(packets[i].getId()) < 0) continue;
-		if (date1 <= dateToStr(packets[i].getBeginDate()) && date2 >= dateToStr(packets[i].getEndDate()))
+		if (helpDate1 <= packets[i].getBeginDate() && helpDate2 >= packets[i].getEndDate())
 			tps_by_date.push_back(packets[i]);
 	}
 
@@ -366,7 +367,7 @@ void Agency::showTravelPack(string id) {
 	}
 }
 
-void Agency::showAllClients() {
+void Agency::justShowAllClients() {
 	if (clients.size() == 0) return;
 	cout << endl << std::left << std::setfill(' ') << std::setw(20) << "\tnome" << std::setw(15) << "NIF" << std::setw(12) << "a. fam." << std::setw(62) << "morada" << "pacotes" << endl;
 	cout << "\t-------------------------------------------------------------------------------------------------------------------------------------------" << endl;
@@ -385,6 +386,10 @@ void Agency::showAllClients() {
 		cout << id_packs << endl;
 	}
 	cout << "\t-------------------------------------------------------------------------------------------------------------------------------------------" << endl << endl;
+}
+
+void Agency::showAllClients() {
+	justShowAllClients();
 	cout << "\t\t[1] Retroceder" << endl << endl;
 	cout << "Opcao: ";
 	string option = "-1";
@@ -692,8 +697,18 @@ void Agency::editClient(string nif) {
 				break;
 			}
 		if (found) {
-			cout << "Cliente escolhido." << endl;
-			cout << "Que deseja modificar? ";
+			cout << "Cliente escolhido.\n" << endl;
+			cout << "\t _______________________________________________________" << endl;
+			cout << "\t|\t\t\t\t\t\t\t|" << endl;
+			cout << "\t|\t[1] Alterar nome\t\t\t\t|" << endl;
+			cout << "\t|\t[2] Alterar NIF\t\t\t\t\t|" << endl;
+			cout << "\t|\t[3] Alterar tamanho de agregado familiar\t|" << endl;
+			cout << "\t|\t[4] Alterar morada\t\t\t\t|" << endl;
+			cout << "\t|\t[5] Alterar pacotes comprados\t\t\t|" << endl;
+			cout << "\t|\t[6] Retroceder\t\t\t\t\t|" << endl;			
+			cout << "\t|\t\t\t\t\t\t\t|" << endl;
+			cout << "\t|_______________________________________________________|" << endl << endl;
+			cout << "Opcao: ";
 		}
 		else {
 			cout << "Nao existe nenhum cliente com esse NIF, escolha outro: ";
@@ -706,28 +721,28 @@ void Agency::editClient(string nif) {
 	getline(cin, edit);
 
 	do {
-		if (edit == "nome") {
+		if (edit == "1") {
 			found = true;
 			cout << "Nome antigo: " << clients[id].getName() << endl;
 			cout << "Escolha um nome novo: ";
 			getline(cin, value);
 			clients[id].setName(value);
 		}
-		else if (edit == "nif") {
+		else if (edit == "2") {
 			found = true;
 			cout << "Nif antigo: " << clients[id].getVATnumber() << endl;
 			cout << "Escolha um nif novo: ";
 			getline(cin, value);
 			clients[id].setVATnumber(value);
 		}
-		else if (edit == "agregado") {
+		else if (edit == "3") {
 			found = true;
 			cout << "Agregado familiar antigo: " << clients[id].getFamilySize() << endl;
 			cout << "Escolha um agregado familiar novo: ";
 			getline(cin, value);
 			clients[id].setFamilySize(value);
 		}
-		else if (edit == "morada") {
+		else if (edit == "4") {
 			found = true;
 			cout << "Morada antiga: " << clients[id].getAddress().getStreet() << " / " << clients[id].getAddress().getDoorNumber() << " / " << clients[id].getAddress().getFloor() << " / " << clients[id].getAddress().getPostalCode() << " / " << clients[id].getAddress().getLocation() << endl;
 			cout << "Escolha uma morada nova: ";
@@ -747,7 +762,7 @@ void Agency::editClient(string nif) {
 			Address address = Address(address_arr[0], address_arr[1], address_arr[2], address_arr[3], address_arr[4]);
 			clients[id].setAddress(address);
 		}
-		else if (edit == "pacotes") {
+		else if (edit == "5") {
 			found = true;
 			cout << "Pacote(s) antigo(s): " << packToStr(clients[id].getPacketList()) << endl;
 			cout << "Escolha um pacote novo / uns pacotes novos: ";
@@ -766,9 +781,12 @@ void Agency::editClient(string nif) {
 			} while (!accepted);
 			clients[id].setPacketList(packs_arr);
 		}
+		else if (edit == "6") {
+			menuClient(*this);
+		}
 		else {
 			found = false;
-			cout << "Certifique-se que escreva: 'nome', 'nif', 'agregado', 'morada', 'pacotes': ";
+			cout << "Essa opção não existe! Escolha uma opção válida:";
 			getline(cin, edit);
 		}
 	} while (!found);

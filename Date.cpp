@@ -4,7 +4,11 @@ Date::Date() {
 }
 
 Date::Date(string date) {
-	
+	vector<string> arr;
+	parseText(date, 0, arr, '/');
+	year = arr[0];
+	month = arr[1];
+	day = arr[2];
 }
 
 
@@ -45,3 +49,43 @@ void Date::setMonth(string month) {
 void Date::setYear(string year) {
 	this->year = year;
 }
+
+bool Date::operator>=(Date right)
+{
+	int ly, lm, ld, ry, rm, rd;
+	ly = stoi(year);
+	lm = stoi(month);
+	ld = stoi(day);
+	ry = stoi(right.year);
+	rm = stoi(right.month);
+	rd = stoi(right.day);
+
+	if (ly > ry)
+		return true;
+	if (lm > rm)
+		return true;
+	if (ld >= rd)
+		return true;
+	return false;
+}
+
+bool Date::operator<=(Date right)
+{
+	int ly, lm, ld, ry, rm, rd;
+	ly = stoi(year);
+	lm = stoi(month);
+	ld = stoi(day);
+	ry = stoi(right.year);
+	rm = stoi(right.month);
+	rd = stoi(right.day);
+
+	if (ly < ry)
+		return true;
+	if (lm < rm)
+		return true;
+	if (ld <= rd)
+		return true;
+	return false;
+}
+
+

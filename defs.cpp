@@ -46,6 +46,7 @@ void parseText(string var, size_t found_1, vector<string> & arr, char c) { // - 
 		cleanSpaces(arr[i]);
 	}
 }
+
 string packToStr(vector<string> packs_arr) {
 	string text = "";
 	if (packs_arr.size() == 1) {
