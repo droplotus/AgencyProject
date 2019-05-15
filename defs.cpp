@@ -12,31 +12,25 @@ void cleanSpaces(string& name) {
 
 // this function parses a text, dividing it by a character I choose and storing each parsed text into a vector
 void parseText(string var, size_t found_1, vector<string> & arr, char c) { // - found_1 is like split(%) in python where % is what I want him to split between, for example "/"
-	if (found_1 == 0 || found_1 == var.length() - 1) return;
-	while (found_1 != string::npos) {
-		string parse;
-		parse = var.substr(0, found_1);
-		var.erase(0, found_1 + 1); // - erase my original until the next '/' string so my while loop can continue error free
-		cleanSpaces(parse);
-		arr.push_back(parse);
-		found_1 = var.find_first_of(c);
+	if (var.size() == 0) {
+		return;
 	}
-	// -had to push_back last value of address because my while loop wasn't perfect
-	// 		so a last value is still un_pushed to the vector address_arr
-	// -had to clean spaces in between because text file has a space between each '/'
-	cleanSpaces(var);
-	arr.push_back(var);
-	// while (var.find(c) != string::npos) {
-	// 	int ix = var.find(c);
-	// 	arr.push_back(var.substr(0, ix));
-	// 	var = var.substr(ix+1);
-	// 	if (var.find(c) == string::npos) {
-	// 		arr.push_back(var);
-	// 	}
-	// }
-	// for (int i = 0; i < arr.size(); i++) {
-	// 	cleanSpaces(arr[i]);
-	// }
+	if (var.find(c) == string::npos) {
+		arr.push_back(var);
+		cleanSpaces(arr[0]);
+		return;
+	}
+	do {
+		int ix = var.find(c);
+		arr.push_back(var.substr(0, ix));
+		var = var.substr(ix + 1);
+		if (var.find(c) == string::npos) {
+			arr.push_back(var);
+		}
+	} while (var.find(c) != string::npos);
+	for (int i = 0; i < arr.size(); i++) {
+		cleanSpaces(arr[i]);
+	}
 }
 
 string packToStr(vector<string> packs_arr) {
