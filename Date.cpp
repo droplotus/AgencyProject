@@ -73,8 +73,12 @@ bool Date::operator>=(Date right)
 
 	if (ly > ry)
 		return true;
+	else if (ly < ry)
+		return false;
 	if (lm > rm)
 		return true;
+	else if (lm < rm)
+		return false;
 	if (ld >= rd)
 		return true;
 	return false;
@@ -88,12 +92,16 @@ bool Date::operator<=(Date right)
 	ld = stoi(day);
 	ry = stoi(right.year);
 	rm = stoi(right.month);
-	rd = stoi(right.day);
+	rd = stoi(right.day);  
 
 	if (ly < ry)
 		return true;
+	else if (ly > ry)
+		return false;
 	if (lm < rm)
 		return true;
+	else if (lm > rm)
+		return false;
 	if (ld <= rd)
 		return true;
 	return false;
