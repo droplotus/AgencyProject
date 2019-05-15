@@ -46,6 +46,7 @@ public:
 
 
 	// methods calculations
+    void checkIds(string id);
 	void justShowAllClients();
 	void showRecommendations();
 	void showTopRatedLocations();
