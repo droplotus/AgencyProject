@@ -430,7 +430,7 @@ void Agency::showTravelPack(string id) {
 	getline(cin, line);
 }
 
-void Agency::showAllClients() {
+void Agency::justShowAllClients(){
 	if (clients.size() == 0) return;
 	cout << endl << std::left << std::setfill(' ') << std::setw(20) << "\tnome" << std::setw(15) << "NIF" << std::setw(12) << "a. fam." << std::setw(62) << "morada" << "pacotes" << endl;
 	cout << "\t-------------------------------------------------------------------------------------------------------------------------------------------" << endl;
@@ -449,6 +449,10 @@ void Agency::showAllClients() {
 		cout << id_packs << endl;
 	}
 	cout << "\t-------------------------------------------------------------------------------------------------------------------------------------------" << endl << endl;
+}
+
+void Agency::showAllClients() {
+	justShowAllClients();
 	cout << "\tPresse ENTER para recuar...";
 	string line;
 	getline(cin, line);

@@ -12,9 +12,9 @@ Casa do Carmo / 12 / 12 / 691-123 / Esch-sur-Alzette
 ::::::::::
 Catia Sousa
 691840850
-2
+3
 Rua mal empregue / 16 / - / 1546-568 / Esch-sur-Alzette
-2 ; 3 ; 9
+2 ; 3 ; -9
 ::::::::::
 Antonio Fonseca
 201304567

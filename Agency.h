@@ -47,6 +47,7 @@ public:
 
 
 	// methods calculations
+	void justShowAllClients();
 	void showRecommendations();
 	void showTopRatedLocations();
 	void showTravelPacksFromAllClients();

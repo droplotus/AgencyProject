@@ -145,6 +145,7 @@ void menuClient(Agency & agency) {
 		}
 		else if (choice == "2") {
 			accepted = true;
+			agency.justShowAllClients();
 			cout << "\tEscolha o NIF do cliente a alterar (escreva ':q' para cancelar): ";
 			string nif;
 			getline(cin, nif);
@@ -154,6 +155,7 @@ void menuClient(Agency & agency) {
 		}
 		else if (choice == "3") {
 			accepted = true;
+			agency.justShowAllClients();
 			cout << "\tEscolha o NIF do cliente a remover (escreva ':q' para cancelar): ";
 			string nif;
 			getline(cin, nif);
@@ -198,6 +200,7 @@ void menuPack(Agency & agency) {
 		}
 		else if (choice == "2") {
 			accepted = true;
+			agency.showTps(agency.getPackets());
 			cout << "\tEscolha o ID do pack a alterar (escreva ':q' para cancelar): ";
 			string id;
 			getline(cin, id);
@@ -207,6 +210,7 @@ void menuPack(Agency & agency) {
 		}
 		else if (choice == "3") {
 			accepted = true;
+			agency.showTps(agency.getPackets());
 			cout << "\tEscolha o ID do pack a remover (escreva ':q' para cancelar): ";
 			string id;
 			getline(cin, id);
@@ -416,6 +420,7 @@ unsigned mainMenu(Agency & agency) {
 		else if (choice == "4") {
 			accepted = true;
 			string nif;
+			agency.justShowAllClients();
 			cout << "\tEscolha o NIF do cliente que efetua a compra (escreva ':q' para cancelar): ";
 			getline(cin, nif);
 			if(nif != ":q")
