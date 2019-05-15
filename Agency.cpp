@@ -4,6 +4,16 @@ string Agency::dateToStr(Date date) const {
 	return date.getYear() + "/" + date.getMonth() + "/" + date.getDay();
 }
 
+void Agency::checkIds(string id){
+	for(int i=0; i<clients.size(); i++)
+		for(int j=0; j<clients[i].getPacketList().size(); j++)
+			if(id == clients[i].getPacketList().at(j)){
+				vector<string> packetList = clients[i].getPacketList();
+				packetList.at(j) = "-" + id;
+				clients[i].setPacketList(packetList);
+			}
+}
+
 void Agency::showTravelPacksFromAllClients() {
 	vector<Packet> tps_arr;
 	vector<string> id_packs_arr;
@@ -503,7 +513,9 @@ void Agency::removeTravelPack(string id) {
 				break;
 			}
 		if (found) {
-			packets.erase(packets.begin() + index);
+			// packets.erase(packets.begin() + index);
+			packets[index].setId("-" + to_string(abs(stoi(packets[index].getId()))));
+			checkIds(id);
 			/*if(packets.size() == 0){
 			  last_id = "0";
 			}else{
@@ -514,9 +526,11 @@ void Agency::removeTravelPack(string id) {
 		else {
 			cout << "\tNao existe nenhum pack com esse ID, escolha outro: ";
 			getline(cin, id);
+			if(id == ":q") return;
 		}
 	} while (!found);
 	updatePacksFile();
+	updateClientsFile();
 }
 
 void Agency::editTravelPack(string id) {
