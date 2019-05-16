@@ -9,6 +9,7 @@ Packet::Packet(string id, vector<string> sites, Date begin, Date end, string pri
 	this->end = end;
 	this->pricePerPerson = pricePerPerson;
 	this->maxPersons = maxPersons;
+	this->boughtTickets = boughtTickets;
 }
 
 Packet::Packet(vector<string> sites, Date begin, Date end, string pricePerPerson, string maxPersons) {

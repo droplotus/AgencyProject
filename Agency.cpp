@@ -674,6 +674,10 @@ void Agency::createTravelPack() {
 		text.push_back("::::::::::");
 		offset = 0;
 	}
+	else {
+		text.push_back("");
+		offset = 0;
+	}
 	cout << "\t,-, --------------------------------------------------------------------- ,-," << endl;
 	cout << "\t|/    Indique as informacoes seguintes:    (escreva ':q' para cancelar)   |/" << endl;
 	cout << "\to   --------------------------------------------------------------------- o" << endl << endl;
@@ -707,6 +711,21 @@ void Agency::createTravelPack() {
 	text.push_back(bought);
 	
 	Date bDate(beginDate), eDate(endDate);
+	bool next = true;
+	while (true) {
+		next = true;
+		for (int i = 0; i < packets.size(); i++) {
+			if (id == packets[i].getId() || ("-" + id) == packets[i].getId()) {
+				cout << "Esse ID ja existe! Insira um novo ID: ";
+				getline(cin, id);
+				if (id == ":q") return;
+				text[1 + offset] = offset;
+				next = false;
+				break;
+			}
+		}
+		if (next) break;
+	}
 	while (!strIsInt(id)) {
 		cout << "ID não é um número! Insira um novo ID: ";
 		getline(cin, id);
@@ -770,8 +789,8 @@ void Agency::createTravelPack() {
 	found_1 = text[4 + offset].find_first_of('/');
 	parseText(text[4 + offset], found_1, end_date_arr, '/');
 
-	Date begin_date = Date(begin_date_arr[0], begin_date_arr[1], begin_date_arr[2]);
-	Date end_date = Date(end_date_arr[0], end_date_arr[1], end_date_arr[2]);
+	Date begin_date = Date(begin_date_arr[2], begin_date_arr[1], begin_date_arr[0]);
+	Date end_date = Date(end_date_arr[2], end_date_arr[1], end_date_arr[0]);
 
 	Packet tp = Packet(text[1 + offset], places, begin_date, end_date, text[5 + offset], text[6 + offset], text[7 + offset]);
 	packets.push_back(tp);

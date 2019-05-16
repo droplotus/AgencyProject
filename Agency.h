@@ -41,12 +41,12 @@ public:
 	vector<Packet> showTravelPacksByDates(string date1, string date2) const;
 	vector<Packet> showTravelPacksByDatesAndPlace(string place, string date1, string date2) const;
 	string dateToStr(Date date) const;
+	void checkIds(string id);
 	string totalTravelPacksBought() const;
 	string totalIncome() const;
 
 
 	// methods calculations
-    void checkIds(string id);
 	void justShowAllClients();
 	void showRecommendations();
 	void showTopRatedLocations();

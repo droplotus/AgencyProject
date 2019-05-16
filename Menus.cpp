@@ -35,6 +35,7 @@ void showTravelPacks(Agency & agency) {
 
 	bool accepted = false;
 	getline(cin, choice);
+	if (choice == ":q") return;
 
 	do {
 		if (choice == "1") {
@@ -118,6 +119,7 @@ void showTravelPacks(Agency & agency) {
 			accepted = false;
 			cout << "\tEsta opcao nao e possivel, escolha outra: ";
 			getline(cin, choice);
+			if (choice == ":q") return;
 		}
 	} while (!accepted);
 }
@@ -173,6 +175,7 @@ void menuClient(Agency & agency) {
 		else {
 			cout << "\tEsta opcao nao e possivel, escolha outra: ";
 			getline(cin, choice);
+			if (choice == ":q") return;
 		}
 	} while (!accepted);
 }
@@ -227,6 +230,7 @@ void menuPack(Agency & agency) {
 		else {
 			cout << "\tEsta opcao nao e possivel, escolha outra: ";
 			getline(cin, choice);
+			if (choice == ":q") return;
 		}
 	} while (!accepted);
 }
@@ -267,6 +271,7 @@ void menuEstatistics(Agency & agency){
 			accepted = false;
 			cout << "\tEsta opcao nao e possivel, escolha outra: ";
 			getline(cin, choice);
+			if (choice == ":q") return;
 		}
 	} while (!accepted);
 }
@@ -327,6 +332,7 @@ void menuInformation(Agency & agency) {
 			accepted = false;
 			cout << "\tEsta opcao nao e possivel, escolha outra: ";
 			getline(cin, choice);
+			if (choice == ":q") return;
 		}
 	} while (!accepted);
 }
@@ -376,6 +382,7 @@ void menuHelp(Agency & agency) {
 			accepted = false;
 			cout << "\tEsta opcao nao e possivel, escolha outra: ";
 			getline(cin, choice);
+			if (choice == ":q") return;
 		}
 	} while (!accepted);
 }
@@ -441,6 +448,7 @@ unsigned mainMenu(Agency & agency) {
 		else {
 			cout << "\tEsta opcao nao e possivel, escolha outra: ";
 			getline(cin, choice);
+			if (choice == ":q") return 0;
 		}
 	} while (!accepted);
 

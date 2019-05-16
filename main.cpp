@@ -6,6 +6,8 @@
 #include "Menus.h"
 // #include "utils.h"
 
+using namespace std;
+
 vector<Client> clients;
 vector<Packet> packets;
 string last_id;
