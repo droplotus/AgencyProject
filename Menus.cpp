@@ -399,7 +399,7 @@ unsigned mainMenu(Agency & agency) {
 	cout << "\t|\t\t\t\t\t\t|" << "\t\tt8.       @@@@8" << endl;
 	cout << "\t|\t[1] Gestao de clientes\t\t\t|" << "\t\t        1@@@," << endl;
 	cout << "\t|\t[2] Gestao de pacotes turisticos\t|" << "\t\t       ,@@@." << endl;
-	cout << "\t|\t[3] Visualizacao de informação\t\t|" << "\t\t       @@i" << endl;
+	cout << "\t|\t[3] Visualizacao de informacao\t\t|" << "\t\t       @@i" << endl;
 	cout << "\t|\t[4] Compra de pacotes turisticos\t|" << "\t\t      ft" << endl;
 	cout << "\t|\t[5] Estatisticas\t\t\t|" << endl;
 	cout << "\t|\t\t\t\t\t\t|" << endl;

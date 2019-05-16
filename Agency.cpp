@@ -964,7 +964,7 @@ void Agency::createClient() {
 	text.push_back(address_str);
 	cout << "\tPacote(s) turistico(s): " << endl;
 	showTps(packets);
-	cout << "\t";
+	cout << "\tOpcao: ";
 	getline(cin, packs_str);
 	if(packs_str == ":q") return;
 	text.push_back(packs_str);
@@ -973,6 +973,18 @@ void Agency::createClient() {
 
 	size_t found_1 = text[5 + offset].find_first_of(';');
 	parseText(text[5 + offset], found_1, packs_arr, ';');
+	while (!strIsInt(nif)) {
+		cout << "NIF não é um número! Insira um novo NIF: ";
+		getline(cin, nif);
+		if (nif == ":q") return;
+		text[2 + offset] = nif;
+	}
+	while (!strIsInt(family)) {
+		cout << "Agregado familiar não é um número! Insira um novo valor: ";
+		getline(cin, family);
+		if (family == ":q") return;
+		text[3 + offset] = family;
+	}
 	while (true) {
 		found_1 = text[4 + offset].find_first_of('/');
 		parseText(text[4 + offset], found_1, client_address_arr, '/');
@@ -1007,6 +1019,15 @@ void Agency::createClient() {
 					packs_arr[i] = line;
 					continue;
 				}
+				break;
+			}
+		}
+	}
+									//for é verificação dos packs
+	for (int i = 0; i < packs_arr.size(); i++) {
+		for (int j = 0; j < packets.size(); j++) {
+			if (packs_arr[i] == packets[j].getId()) {
+				packets[j].setBoughtTickets(to_string(stoi(packets[j].getBoughtTickets()) + stoi(family)));
 				break;
 			}
 		}
