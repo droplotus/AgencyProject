@@ -16,6 +16,7 @@ private:
 	string familySize;  // number of family members
 	Address address = Address(); // client's address
 	vector<string> id_packs; // vector to store client's packets bought
+	//string moneySpent;
 
 public:
 	Client();
@@ -28,6 +29,7 @@ public:
 	string getFamilySize() const;
 	Address getAddress() const;
 	vector<string> getPacketList() const;
+	//string getMoneySpent() const;
 
 	// SET methods
 
@@ -36,5 +38,5 @@ public:
 	void setFamilySize(string familySize);
 	void setAddress(Address address);
 	void setPacketList(vector<string> id_packs);
-
+	//void setMoneySpent(string moneySpent);
 };

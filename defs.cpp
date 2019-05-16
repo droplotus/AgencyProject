@@ -93,3 +93,15 @@ bool strIsDate(string date)
 	return false;
 }
 
+void eraseInVecStr(vector<string>& vec, string elem) {
+	/*
+	Erase elem of a vector vec with elements of type str.
+	*/
+	vector<string> aux = vec;
+	vec.clear();
+	for (int i = 0; i < aux.size(); i++) {
+		if (aux[i] == elem) continue;
+		vec.push_back(aux[i]);
+	}
+}
+

@@ -26,3 +26,6 @@ int findInVecStr(vector<string> vec, string elem);
 bool strIsInt(string n);
 
 bool strIsDate(string date);
+
+void eraseInVecStr(vector<string>& vec, string elem);
+

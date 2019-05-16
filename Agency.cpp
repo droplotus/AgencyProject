@@ -353,8 +353,9 @@ vector<Packet> Agency::getPackets() const {
 
 string Agency::totalTravelPacksBought() const{
 	int total = 0;
-	for(int i=0; i<packets.size(); i++)
-		if(stoi(packets[i].getBoughtTickets()) > 0) total++;
+	for (int i = 0; i < packets.size(); i++) {
+		total += stoi(packets[i].getBoughtTickets());
+	}
 	return to_string(total);
 }
 
@@ -440,7 +441,10 @@ void Agency::showTravelPack(string id) {
 }
 
 void Agency::justShowAllClients(){
-	if (clients.size() == 0) return;
+	if (clients.size() == 0) {
+		cout << "Nao existem clientes!" << endl;
+		return;
+	}
 	cout << endl << std::left << std::setfill(' ') << std::setw(20) << "\tnome" << std::setw(15) << "NIF" << std::setw(12) << "a. fam." << std::setw(62) << "morada" << "pacotes" << endl;
 	cout << "\t-------------------------------------------------------------------------------------------------------------------------------------------" << endl;
 	for (int i = 0; i < clients.size(); i++) {
@@ -843,11 +847,18 @@ void Agency::editClient(string nif) {
 			}
 		if (found) {
 			cout << "\tCliente escolhido." << endl << endl;
-			cout << "\t,-, --------------------------------- ,-," << endl;
-			cout << "\t|/     (escreva ':q' para cancelar)   |/" << endl;
-			cout << "\to   --------------------------------- o" << endl << endl;
-			cout << "\tCertifique-se que escreva 'rua / porta / andar / codigo-postal / localidade'" << endl;
-			cout << "\tQue deseja modificar? ";
+			cout << "\t _______________________________________________" << endl;
+			cout << "\t|\t\t\t\t\t\t|" << endl;
+			cout << "\t|\t[1] Modificar Nome\t\t\t|" << endl;
+			cout << "\t|\t[2] Modificar NIF\t\t\t|" << endl;
+			cout << "\t|\t[3] Modificar Agregado Familiar\t\t|" << endl;
+			cout << "\t|\t[4] Modificar Morada\t\t\t\t|" << endl;			
+			cout << "\t|\t[5] Modificar Pacotes\t\t\t\t|" << endl;			
+			cout << "\t|\t[6] Retroceder\t\t\t\t|" << endl;			
+			cout << "\t|\t\t\t\t\t\t|" << endl;
+			cout << "\t|\t[0] SAIR\t\t\t\t|" << endl;
+			cout << "\t|_______________________________________________|" << endl << endl;
+			cout << "Opcao: ";
 		}
 		else {
 			cout << "\tNao existe nenhum cliente com esse NIF, escolha outro: ";
@@ -858,34 +869,34 @@ void Agency::editClient(string nif) {
 	string edit;
 	string value;
 	getline(cin, edit);
-	if(edit == ":q") return;
-
+	if (edit == ":q" || edit == "6") return;
+	if (edit == "0") exit(0);
 	do {
-		if (edit == "nome") {
+		if (edit == "1") {
 			found = true;
 			cout << "\tNome antigo: " << clients[id].getName() << endl;
 			cout << "\tEscolha um nome novo: ";
 			getline(cin, value);
 			clients[id].setName(value);
 		}
-		else if (edit == "nif") {
+		else if (edit == "2") {
 			found = true;
 			cout << "\tNif antigo: " << clients[id].getVATnumber() << endl;
 			cout << "\tEscolha um nif novo: ";
 			getline(cin, value);
 			clients[id].setVATnumber(value);
 		}
-		else if (edit == "agregado") {
+		else if (edit == "3") {
 			found = true;
 			cout << "\tAgregado familiar antigo: " << clients[id].getFamilySize() << endl;
 			cout << "\tEscolha um agregado familiar novo: ";
 			getline(cin, value);
 			clients[id].setFamilySize(value);
 		}
-		else if (edit == "morada") {
+		else if (edit == "4") {
 			found = true;
 			cout << "\tMorada antiga: " << clients[id].getAddress().getStreet() << " / " << clients[id].getAddress().getDoorNumber() << " / " << clients[id].getAddress().getFloor() << " / " << clients[id].getAddress().getPostalCode() << " / " << clients[id].getAddress().getLocation() << endl;
-			cout << "\tEscolha uma morada nova: ";
+			cout << "\tEscolha uma morada nova no formato 'rua / porta / andar / codigo-postal / localidade': ";
 			vector<string> address_arr;
 			bool accepted = false;
 			do {
@@ -902,28 +913,64 @@ void Agency::editClient(string nif) {
 			Address address = Address(address_arr[0], address_arr[1], address_arr[2], address_arr[3], address_arr[4]);
 			clients[id].setAddress(address);
 		}
-		else if (edit == "pacotes") {
+		else if (edit == "5") {
 			found = true;
-			cout << "\tPacote(s) antigo(s): " << packToStr(clients[id].getPacketList()) << endl;
-			cout << "\tEscolha um pacote novo / uns pacotes novos: ";
 			vector<string> packs_arr;
-			bool accepted = false;
-			do {
-				getline(cin, value);
-				size_t found_1 = value.find_first_of(';');
-				parseText(value, found_1, packs_arr, ';');
-				if (packs_arr.size() >= 1) {
-					accepted = true;
-				}
-				else {
-					cout << "\tCertifique-se que escreva o ID do pacote e se tiver mais que um, separe-os por ';' : ";
-				}
-			} while (!accepted);
-			clients[id].setPacketList(packs_arr);
+			string opcao;
+			cout << "\tPacote(s) antigo(s): " << packToStr(clients[id].getPacketList()) << endl;
+			cout << "\t _______________________________________________" << endl;
+			cout << "\t|\t\t\t\t\t\t|" << endl;
+			cout << "\t|\t[1] Adicionar Pacote\t\t\t|" << endl;
+			cout << "\t|\t[2] Remover Pacote\t\t\t|" << endl;
+			cout << "\t|\t[3] Retroceder\t\t\t\t|" << endl;
+			cout << "\t|\t\t\t\t\t\t|" << endl;
+			cout << "\t|\t[0] SAIR\t\t\t\t|" << endl;
+			cout << "\t|_______________________________________________|" << endl << endl;
+			cout << "Opcao: ";
+			getline(cin, opcao);
+			if (opcao == ":q" || opcao == "3") return;
+			else if (opcao == "0") exit(0);
+			else if (opcao == "1") {											//ESTOU A FAZER ISTO DE MODIFICAR OS PACKS DE UM CLIENTE!!
+				bool accepted = false;
+				cout << "Que pacote pretende adicionar? (Se adiconar mais que um pacote, separe-os por ';'): ";
+				do {
+					getline(cin, value);
+					if (value == ":q") return;
+					size_t found_1 = value.find_first_of(';');
+					parseText(value, found_1, packs_arr, ';');
+					if (packs_arr.size() >= 1) {
+						accepted = true;
+					}
+					else {
+						cout << "Certifique-se que escreva o ID do pacote e se tiver mais que um, separe-os por ';' : ";
+					}
+				} while (!accepted);
+				clients[id].setPacketList(packs_arr);
+			}
+			else if (opcao == "2") {
+				bool accepted = false;
+				cout << "Que pacote pretende remover? (Se remover mais que um pacote, separe-os por ';'): ";
+				do {
+					getline(cin, value);
+					if (value == ":q") return;
+					size_t found_1 = value.find_first_of(';');
+					parseText(value, found_1, packs_arr, ';');
+					if (packs_arr.size() >= 1) {
+						accepted = true;
+					}
+					else {
+						cout << "Certifique-se que escreva o ID do pacote e se tiver mais que um, separe-os por ';' : ";
+					}
+				} while (!accepted);				
+				vector<string> clientPacks = clients[id].getPacketList();
+				for (int j = 0; j < packs_arr.size(); j++)
+					eraseInVecStr(clientPacks, packs_arr[j]);
+				clients[id].setPacketList(clientPacks);
+			}
 		}
 		else {
 			found = false;
-			cout << "\tCertifique-se que escreva: 'nome', 'nif', 'agregado', 'morada', 'pacotes': ";
+			cout << "Certifique-se que selecionou uma opcao correta: ";
 			getline(cin, edit);
 		}
 	} while (!found);
@@ -962,7 +1009,7 @@ void Agency::createClient() {
 	getline(cin, address_str);
 	if(address_str == ":q") return;
 	text.push_back(address_str);
-	cout << "\tPacote(s) turistico(s): " << endl;
+	cout << "\tPacote(s) turistico(s) (Se inserir mais que um separe-os por ';'): " << endl;
 	showTps(packets);
 	cout << "\tOpcao: ";
 	getline(cin, packs_str);
@@ -1084,6 +1131,7 @@ void Agency::buyTravelPack(string nif) {
 		if (!found) {
 			cout << "Nao existe ninguem com este NIF, escolha outro: ";
 			getline(cin, nif);
+			if (nif == ":q") return;
 		}
 	} while (!found);
 
@@ -1095,15 +1143,11 @@ void Agency::buyTravelPack(string nif) {
 	for (int i = 0; i < packets.size(); i++) {
 		diff = true;
 		if (stoi(packets[i].getId()) < 0) continue;
-		for (int j = 0; j < id_packs_arr.size(); j++)
-			if (abs(stoi(packets[i].getId())) == stoi(id_packs_arr[j])) {
-				diff = false;
-			}
-		if (diff) tps_arr.push_back(packets[i]);
+		tps_arr.push_back(packets[i]);
 	}
 
-	showTps(tps_arr);
-	if (!tps_arr.size()) {
+	showTps(packets);
+	if (!packets.size()) {
 		cout << "Sem packs para comprar, presse ENTER para recuar..." << endl;
 		string l;
 		getline(cin, l);
@@ -1115,13 +1159,17 @@ void Agency::buyTravelPack(string nif) {
 	bool accepted = false;
 	while (!accepted) {
 		getline(cin, option);
-		if (option == "0") break;
-		for (int i = 0; i < tps_arr.size(); i++)
-			if (option == tps_arr[i].getId()) {
+		if (option == ":q") return;
+		for (int i = 0; i < packets.size(); i++)
+			if (option == packets[i].getId()) {
 				string agregated = clients[index].getFamilySize();
-				if (stoi(tps_arr[i].getBoughtTickets()) + stoi(agregated) <= stoi(tps_arr[i].getMaxPersons())) {
-					int index_1 = findTpByID(tps_arr[i].getId());
+				if (stoi(packets[i].getBoughtTickets()) + stoi(agregated) <= stoi(packets[i].getMaxPersons())) {
+					int index_1 = findTpByID(packets[i].getId());
 					packets[index_1].setBoughtTickets(to_string(stoi(tps_arr[i].getBoughtTickets()) + stoi(agregated)));
+					if (!purchaseIsPossible(clients[index], packets[index_1])) {
+						accepted = false;
+						break;
+					}
 					if (packets[index_1].getBoughtTickets() == packets[index_1].getMaxPersons()) packets[index_1].setId("-" + packets[index_1].getId());
 					vector<string> id_packs_temp = clients[index].getPacketList();
 					id_packs_temp.push_back(packets[index_1].getId());
@@ -1147,6 +1195,24 @@ bool Agency::numberIsID(int n)
 		}
 	}
 	return result;
+}
+
+bool Agency::purchaseIsPossible(Client client, Packet pack) const
+{
+	if ((stoi(pack.getMaxPersons()) - stoi(pack.getBoughtTickets())) >= stoi(client.getFamilySize())) return true;
+	return false;
+}
+
+Client Agency::getClientByNif(string nif)
+{
+	string letterNotFound;																							
+	vector<string> vecNotFound = { "0" };																			//Teve que ser assim que não funcionava de
+	Address addressNotFound(letterNotFound, letterNotFound, letterNotFound, letterNotFound, letterNotFound);		//	outra maneira.
+	Client notFound(letterNotFound, letterNotFound, letterNotFound, addressNotFound, vecNotFound);
+	for (int i = 0; i < clients.size(); i++) {
+		if (clients[i].getVATnumber() == nif) return clients[i];
+	}
+	return notFound;
 }
 
 void Agency::updateClientsFile() {

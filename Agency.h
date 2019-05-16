@@ -68,6 +68,8 @@ public:
 	void updateClientsFile();
 	void buyTravelPack(string nif);
 	bool numberIsID(int n);
+	bool purchaseIsPossible(Client client, Packet pack) const;
+	Client getClientByNif(string nif);
 
 	// methods SET
 	void setName(string name);

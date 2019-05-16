@@ -117,7 +117,7 @@ void showTravelPacks(Agency & agency) {
 		}
 		else {
 			accepted = false;
-			cout << "\tEsta opcao nao e possivel, escolha outra: ";
+			cout << "Esta opcao nao e possivel, escolha outra: ";
 			getline(cin, choice);
 			if (choice == ":q") return;
 		}
@@ -173,7 +173,7 @@ void menuClient(Agency & agency) {
 			exit(0);
 		}
 		else {
-			cout << "\tEsta opcao nao e possivel, escolha outra: ";
+			cout << "Esta opcao nao e possivel, escolha outra: ";
 			getline(cin, choice);
 			if (choice == ":q") return;
 		}
@@ -228,7 +228,7 @@ void menuPack(Agency & agency) {
 			exit(0);
 		}
 		else {
-			cout << "\tEsta opcao nao e possivel, escolha outra: ";
+			cout << "Esta opcao nao e possivel, escolha outra: ";
 			getline(cin, choice);
 			if (choice == ":q") return;
 		}
@@ -394,7 +394,7 @@ unsigned mainMenu(Agency & agency) {
 	cout << "\tURL:\t\t" << agency.getURL() << "\t\t\t        .@@@" << endl;
 	cout << "\tEndereco:\t" << agency.getAddress().getStreet() << " / " << agency.getAddress().getDoorNumber() << " / " << agency.getAddress().getFloor() << " / " << agency.getAddress().getPostalCode() << " / " << agency.getAddress().getLocation() << "\t         :@@@:" << endl;
 	cout << "\t\t\t\t\t\t\t\t\t18.       @@@@@" << endl;
-	cout << "\tPacotes vendidos: \t" << agency.totalTravelPacksBought() << "\t\t\t\t\t @@O      ;@@@@@;" << endl << "\tValor total: \t\t" << agency.totalIncome() << " €" << "\t\t\t\t\t:@@@@@@OftfffftfG@@@@@@l>" <<  endl;
+	cout << "\tPacotes vendidos: \t" << agency.totalTravelPacksBought() << "\t\t\t\t\t @@O      ;@@@@@;" << endl << "\tValor total: \t\t" << agency.totalIncome() << " Euros" << "\t\t\t\t\t:@@@@@@OftfffftfG@@@@@@l>" <<  endl;
 	cout << "\t _______________________________________________" << "\t\t @@O      :@@@@@:" << endl;
 	cout << "\t|\t\t\t\t\t\t|" << "\t\tt8.       @@@@8" << endl;
 	cout << "\t|\t[1] Gestao de clientes\t\t\t|" << "\t\t        1@@@," << endl;
@@ -428,7 +428,7 @@ unsigned mainMenu(Agency & agency) {
 			accepted = true;
 			string nif;
 			agency.justShowAllClients();
-			cout << "\tEscolha o NIF do cliente que efetua a compra (escreva ':q' para cancelar): ";
+			cout << "Escolha o NIF do cliente que efetua a compra (escreva ':q' para cancelar): ";
 			getline(cin, nif);
 			if(nif != ":q")
 				agency.buyTravelPack(nif);
@@ -446,7 +446,7 @@ unsigned mainMenu(Agency & agency) {
 			exit(0);
 		}
 		else {
-			cout << "\tEsta opcao nao e possivel, escolha outra: ";
+			cout << "Esta opcao nao e possivel, escolha outra: ";
 			getline(cin, choice);
 			if (choice == ":q") return 0;
 		}
