@@ -751,39 +751,39 @@ void Agency::createTravelPack() {
 		if (next) break;
 	}
 	while (!strIsInt(id)) {
-		cout << "ID não é um número! Insira um novo ID: ";
+		cout << "ID nï¿½o ï¿½ um nï¿½mero! Insira um novo ID: ";
 		getline(cin, id);
 		if (id == ":q") return;
 		text[1 + offset] = id;
 	}
 	while (!bDate.isValid()) {
-		cout << "Data de início de viagem inválida! Insira uma nova data com o seguinte formato aaaa/mm/dd: ";
+		cout << "Data de inï¿½cio de viagem invï¿½lida! Insira uma nova data com o seguinte formato aaaa/mm/dd: ";
 		getline(cin, beginDate);
 		if (beginDate == ":q") return;
 		bDate.setDate(beginDate);
 		text[3 + offset] = beginDate;
 	}
 	while (!eDate.isValid()) {
-		cout << "Data de fim de viagem inválida! Insira uma nova data com o seguinte formato aaaa/mm/dd: ";
+		cout << "Data de fim de viagem invï¿½lida! Insira uma nova data com o seguinte formato aaaa/mm/dd: ";
 		getline(cin, endDate);
 		if (endDate == ":q") return;
 		eDate.setDate(endDate);
 		text[4 + offset] = endDate;
 	}
 	while (!strIsInt(price)) {
-		cout << "Preço não é um número! Insira um novo preço: ";
+		cout << "Preï¿½o nï¿½o ï¿½ um nï¿½mero! Insira um novo preï¿½o: ";
 		getline(cin, price);
 		if (price == ":q") return;
 		text[5 + offset] = price;
 	}
 	while (!strIsInt(avail)) {
-		cout << "O valor de Bilhetes disponíveis inseridos nao é um número! Insira um novo valor: ";
+		cout << "O valor de Bilhetes disponï¿½veis inseridos nao ï¿½ um nï¿½mero! Insira um novo valor: ";
 		getline(cin, avail);
 		if (avail == ":q") return;
 		text[6 + offset] = avail;
 	}
 	while (!strIsInt(bought)) {
-		cout << "O valor de Bilhetes comprados inseridos nao é um número! Insira um novo valor: ";
+		cout << "O valor de Bilhetes comprados inseridos nao ï¿½ um nï¿½mero! Insira um novo valor: ";
 		getline(cin, bought);
 		if (bought == ":q") return;
 		text[7 + offset] = bought;
@@ -1052,13 +1052,13 @@ void Agency::createClient() {
 	parseText(text[5 + offset], found_1, packs_arr, ';');
 
 	while (!strIsInt(nif)) {
-		cout << "NIF não é um número! Insira um novo NIF: ";
+		cout << "NIF nï¿½o ï¿½ um nï¿½mero! Insira um novo NIF: ";
 		getline(cin, nif);
 		if (nif == ":q") return;
 		text[2 + offset] = nif;
 	}
 	while (!strIsInt(family)) {
-		cout << "Agregado familiar não é um número! Insira um novo valor: ";
+		cout << "Agregado familiar nï¿½o ï¿½ um nï¿½mero! Insira um novo valor: ";
 		getline(cin, family);
 		if (family == ":q") return;
 		text[3 + offset] = family;
@@ -1079,26 +1079,26 @@ void Agency::createClient() {
 			client_address_arr.clear();
 		}
 	}
-	//while é verificação se a morada tem 4 barras
+	//while ï¿½ verificaï¿½ï¿½o se a morada tem 4 barras
 	for (int i = 0; i < packs_arr.size(); i++) {
 		for (int j = 0; j < packs_arr[i].size(); j++) {
 			while (true) {
 				if (packs_arr[i][j] < 48 || packs_arr[i][j] > 57) {
-					cout << "Pack comprado inserido não é um número! Por favor insira um pacote válido(:q para retroceder): ";
+					cout << "Pack comprado inserido nï¿½o ï¿½ um nï¿½mero! Por favor insira um pacote vï¿½lido(:q para retroceder): ";
 					getline(cin, line);
 					if (line == ":q") return;
 					packs_arr[i] = line;
 					continue;
 				}
 				if (!numberIsID(stoi(packs_arr[i]))) {
-					cout << "Pack comprado inserido não existe! Por favor insira um pacote válido(:q para retroceder): ";
+					cout << "Pack comprado inserido nï¿½o existe! Por favor insira um pacote vï¿½lido(:q para retroceder): ";
 					getline(cin, line);
 					if (line == ":q") return;
 					packs_arr[i] = line;
 					continue;
 				}
 				if (!purchaseIsPossible(family, packets[findTpByID(packs_arr[i])])) {
-					cout << "Nao ha bilhetes disponiveis neste pacote! Por favor insira um pacote válido(:q para retroceder): ";
+					cout << "Nao ha bilhetes disponiveis neste pacote! Por favor insira um pacote vï¿½lido(:q para retroceder): ";
 					getline(cin, line);
 					if (line == ":q") return;
 					packs_arr[i] = line;
@@ -1108,7 +1108,7 @@ void Agency::createClient() {
 			}
 		}
 	}
-	//for é verificação dos packs
+	//for ï¿½ verificaï¿½ï¿½o dos packs
 
 	for (int i = 0; i < packs_arr.size(); i++) {
 		moneySpent += stoi(family) * stoi(getTpPriceByID(packs_arr[i]));
@@ -1203,35 +1203,38 @@ void Agency::buyTravelPack(string nif) {
 
 	cout << endl << "Escolha pack a comprar (escreva :q para cancelar): ";
 	string option;
+	bool print = true;			//Para ver se imprime o "Esse ID nao existe! Insira um novo ID:"
 	bool accepted = false;
 	while (!accepted) {
 		getline(cin, option);
 		if (option == ":q") return;
-		for (int i = 0; i < packets.size(); i++)
+		for (int i = 0; i < packets.size(); i++) {
 			if (option == packets[i].getId()) {
 				string agregated = clients[index].getFamilySize();
 				if (stoi(packets[i].getBoughtTickets()) + stoi(agregated) <= stoi(packets[i].getMaxPersons())) {
-					int index_1 = findTpByID(packets[i].getId());
+					int index_1 = findTpByID(option);
 					packets[index_1].setBoughtTickets(to_string(stoi(tps_arr[i].getBoughtTickets()) + stoi(agregated)));
-					if (!purchaseIsPossible(clients[index].getFamilySize(), packets[index_1])) {
-						cout << "Esse pacote nao tem bilhetes suficientes para a familia do cliente. Insira um novo ID: ";
-						accepted = false;
-						break;
-					}
-					if (packets[index_1].getBoughtTickets() == packets[index_1].getMaxPersons()) packets[index_1].setId("-" + packets[index_1].getId());
+					if (packets[index_1].getBoughtTickets() == packets[index_1].getMaxPersons()) packets[index_1].setId("-" + packets[index_1].getId()); //Se os packs esgotarem, colocar o id a menos
 					vector<string> id_packs_temp = clients[index].getPacketList();
-					id_packs_temp.push_back(packets[index_1].getId());
+					id_packs_temp.push_back(option);
 					clients[index].setPacketList(id_packs_temp);
 					accepted = true;
 					updatePacksFile();
 					updateClientsFile();
 				}
+				else {
+					cout << "Essse pacote nao tem bilhetes suficientes para a familia do cliente!. Insira um novo ID: ";
+					accepted = false;
+					print = false;
+					break;														
+				}
 			}
+		}
 		if (accepted) {
 			cout << "Compra efetuada com sucesso!" << endl;
 			break;
 		}
-		else {
+		else if (!accepted && print) {
 			cout << "Esse ID nao existe! Insira um novo ID: ";
 		}
 	}
@@ -1258,7 +1261,7 @@ bool Agency::purchaseIsPossible(string family, Packet pack) const
 Client Agency::getClientByNif(string nif)
 {
 	string letterNotFound = "0";
-	vector<string> vecNotFound = { "0" };																			//Teve que ser assim que não funcionava de
+	vector<string> vecNotFound = { "0" };																			//Teve que ser assim que nï¿½o funcionava de
 	Address addressNotFound(letterNotFound, letterNotFound, letterNotFound, letterNotFound, letterNotFound);		//	outra maneira.
 	Client notFound(letterNotFound, letterNotFound, letterNotFound, addressNotFound, vecNotFound, letterNotFound);
 	for (int i = 0; i < clients.size(); i++) {
