@@ -376,8 +376,12 @@ string Agency::totalIncome() const {
 
 // SET Methods
 void Agency::showRecommendations() {
-	vector<Packet> new_packets = cleanOrganizedPackets();
+	vector<Packet> new_packets = cleanOrganizedPackets(), aux;
 	vector<string> output;
+	for (int i = 0; i < new_packets.size(); i++) {
+		if (stoi(new_packets[i].getId()) > 0) aux.push_back(new_packets[i]);
+	}
+	new_packets = aux;
 	cout << endl;
 	for (int i = 0; i < clients.size(); i++) {
 		for (int j = 0; j < new_packets.size(); j++) {
