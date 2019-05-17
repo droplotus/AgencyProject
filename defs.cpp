@@ -7,6 +7,7 @@ bool isEmpty(std::ifstream& file) {
 
 // this function cleans the extra spaces before and after the text
 void cleanSpaces(string& name) {
+	if (name.size() == 0) return;
 	while (name.at(0) == ' ') name.erase(0, 1); // changed if to while
 	while (name.at(name.length() - 1) == ' ') name.erase(name.length() - 1); // changed if to while
 }

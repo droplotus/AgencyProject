@@ -457,21 +457,22 @@ void Agency::justShowAllClients() {
 		cout << "Nao existem clientes!" << endl;
 		return;
 	}
-	cout << endl << std::left << std::setfill(' ') << std::setw(20) << "\tnome" << std::setw(15) << "NIF" << std::setw(12) << "a. fam." << std::setw(62) << "morada" << "pacotes" << endl;
+	cout << endl << std::left << std::setfill(' ') << std::setw(22) << "\tnome" << std::setw(12) << "NIF" << std::setw(9) << "a. fam." << std::setw(59) << "\tmorada" << std::setw(20) << "pacotes"  << "dinheiro gasto" << endl;   //ATUALIZAR SETW()!!
 	cout << "\t-------------------------------------------------------------------------------------------------------------------------------------------" << endl;
 	for (int i = 0; i < clients.size(); i++) {
 		cout << "\t";
-		cout << std::setw(19) << clients[i].getName();
+		cout << std::setw(20) << clients[i].getName();
 		cout << std::setw(15) << clients[i].getVATnumber();
 		cout << std::setw(12) << clients[i].getFamilySize();
 		string address = clients[i].getAddress().getStreet() + " / " + clients[i].getAddress().getDoorNumber() + " / " + clients[i].getAddress().getFloor() + " / " + clients[i].getAddress().getPostalCode() + " / " + clients[i].getAddress().getLocation();
-		cout << std::setw(62) << address;
+		cout << std::setw(60) << address;
 		string id_packs = "";
 		for (int j = 0; j < clients[i].getPacketList().size() - 1; j++) {
 			id_packs += clients[i].getPacketList().at(j) + " ; ";
 		}
 		id_packs += clients[i].getPacketList().at(clients[i].getPacketList().size() - 1);
-		cout << id_packs << endl;
+		cout << std::setw(20) << id_packs;
+		cout << clients[i].getMoneySpent() << endl;
 	}
 	cout << "\t-------------------------------------------------------------------------------------------------------------------------------------------" << endl << endl;
 }
