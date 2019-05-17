@@ -506,6 +506,7 @@ void Agency::showClient(string nif) {
 		for (int i = 1; i < clients[index].getPacketList().size(); i++) {
 			cout << " ; " << clients[index].getPacketList().at(i);
 		}
+		cout << endl << "\tDinheiro Gasto: " << clients[index].getMoneySpent();
 		cout << endl << "\t----------------------------------------------------------------------" << endl << endl;
 	}
 	cout << "\tPresse ENTER para recuar...";
