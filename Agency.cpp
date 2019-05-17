@@ -4,10 +4,10 @@ string Agency::dateToStr(Date date) const {
 	return date.getYear() + "/" + date.getMonth() + "/" + date.getDay();
 }
 
-void Agency::checkIds(string id) {
-	for (int i = 0; i < clients.size(); i++)
-		for (int j = 0; j < clients[i].getPacketList().size(); j++)
-			if (id == clients[i].getPacketList().at(j)) {
+void Agency::checkIds(string id){
+	for(int i=0; i<clients.size(); i++)
+		for(int j=0; j<clients[i].getPacketList().size(); j++)
+			if(id == clients[i].getPacketList().at(j)){
 				vector<string> packetList = clients[i].getPacketList();
 				packetList.at(j) = "-" + id;
 				clients[i].setPacketList(packetList);
@@ -108,11 +108,6 @@ int Agency::findTpByID(string id) const {
 	return -1;
 }
 
-string Agency::getTpPriceByID(string id) const {
-	int ix = findTpByID(id);
-	return packets[ix].getPricePerPerson();
-}
-
 void Agency::fillClients(string fileName) {
 	ifstream clientsFile;
 	clientsFile.open(fileName);
@@ -154,9 +149,6 @@ void Agency::fillClients(string fileName) {
 		found_1 = line.find_first_of(';');
 		parseText(line, found_1, packs_arr, ';');
 		client.setPacketList(packs_arr);
-
-		getline(clientsFile, line);
-		client.setMoneySpent(line);
 
 		clients.push_back(client);
 
@@ -275,22 +267,22 @@ Agency::Agency(vector<Client> & clients, vector<Packet> & packets, string & last
 }
 
 // metodos GET
-vector<Packet> Agency::cleanOrganizedPackets() const {
+vector<Packet> Agency::cleanOrganizedPackets() const{
 	Packet temp;
 	vector<Packet> new_packets = packets;
 	// adding replicates BoughtTickets + removing replicates
-	for (int i = new_packets.size() - 1; i > 0; i--)
-		for (int j = i - 1; j >= 0; j--)
-			if (new_packets[j].getSites().at(0) == new_packets[i].getSites().at(0)) {
+	for(int i = new_packets.size()-1; i > 0; i--)
+		for(int j = i-1; j>=0; j--)
+			if(new_packets[j].getSites().at(0) == new_packets[i].getSites().at(0)){
 				new_packets[j].setBoughtTickets(to_string(stoi(new_packets[i].getBoughtTickets()) + stoi(new_packets[j].getBoughtTickets())));
 				new_packets.erase(new_packets.begin() + i);
 				break;
 			}
 
 	// sorting algorithm
-	for (int i = 0; i < new_packets.size(); i++)
-		for (int j = i + 1; j < new_packets.size(); j++)
-			if (stoi(new_packets[j].getBoughtTickets()) > stoi(new_packets[i].getBoughtTickets()))
+	for(int i = 0; i<new_packets.size(); i++)
+		for(int j = i+1; j<new_packets.size(); j++)
+			if(stoi(new_packets[j].getBoughtTickets()) > stoi(new_packets[i].getBoughtTickets()))
 				std::swap(new_packets[i], new_packets[j]);
 
 	return new_packets;
@@ -359,7 +351,7 @@ vector<Packet> Agency::getPackets() const {
 	return packets;
 }
 
-string Agency::totalTravelPacksBought() const {
+string Agency::totalTravelPacksBought() const{
 	int total = 0;
 	for (int i = 0; i < packets.size(); i++) {
 		total += stoi(packets[i].getBoughtTickets());
@@ -367,42 +359,38 @@ string Agency::totalTravelPacksBought() const {
 	return to_string(total);
 }
 
-string Agency::totalIncome() const {
+string Agency::totalIncome() const{
 	int sum = 0;
-	for (int i = 0; i < packets.size(); i++)
+	for(int i=0; i<packets.size(); i++)
 		sum += stoi(packets[i].getBoughtTickets()) * stoi(packets[i].getPricePerPerson());
 	return to_string(sum);
 }
 
 // SET Methods
-void Agency::showRecommendations() {
-	vector<Packet> new_packets = cleanOrganizedPackets(), aux;
+void Agency::showRecommendations(){
+	vector<Packet> new_packets = cleanOrganizedPackets();
 	vector<string> output;
-	for (int i = 0; i < new_packets.size(); i++) {
-		if (stoi(new_packets[i].getId()) > 0) aux.push_back(new_packets[i]);
-	}
-	new_packets = aux;
 	cout << endl;
-	for (int i = 0; i < clients.size(); i++) {
-		for (int j = 0; j < new_packets.size(); j++) {
+	for(int i=0; i<clients.size(); i++){
+		for(int j=0; j<new_packets.size(); j++){
 			bool found = false;
 			int id;
-			for (int z = 0; z < clients[i].getPacketList().size(); z++) {
-				if (new_packets[j].getId() == clients[i].getPacketList().at(z))
+			for(int z=0; z<clients[i].getPacketList().size(); z++){
+				if(new_packets[j].getId() == clients[i].getPacketList().at(z))
 					found = true;
-				if (found) break;
+				if(found) break;
 			}
-			if (!found) {
+			if(!found){
 				string name = clients[i].getName();
 				output.push_back("\tPara: " + name + "\t\trecomendamos: " + new_packets[j].getSites().at(0));
 				break;
 			}
 		}
 	}
-	for (int i = 0; i < output.size(); i++) cout << output[i] << endl;
+	for(int i=0; i<output.size(); i++) cout << output[i] << endl;
 }
 
-void Agency::showTopRatedLocations() {
+void Agency::showTopRatedLocations(){
 	vector<Packet> new_packets = cleanOrganizedPackets();
 	cout << endl;
 	cout << "\t,-----------------------," << endl;
@@ -411,9 +399,9 @@ void Agency::showTopRatedLocations() {
 
 	cout << std::left << setw(31) << "\tLocal" << "Visitas" << endl;
 	cout << "\t-------------------------------------" << endl;
-	for (int i = 0; i < new_packets.size(); i++)
-		cout << "\t" << setw(30) << new_packets[i].getSites().at(0) << new_packets[i].getBoughtTickets() << endl;
-
+	for(int i=0; i<new_packets.size(); i++)
+		cout << "\t" << setw(30) << new_packets[i].getSites().at(0)  << new_packets[i].getBoughtTickets() << endl;
+	
 	cout << endl << "\tPresse ENTER para recuar..." << endl;
 	string line;
 	getline(cin, line);
@@ -452,7 +440,7 @@ void Agency::showTravelPack(string id) {
 	getline(cin, line);
 }
 
-void Agency::justShowAllClients() {
+void Agency::justShowAllClients(){
 	if (clients.size() == 0) {
 		cout << "Nao existem clientes!" << endl;
 		return;
@@ -510,7 +498,6 @@ void Agency::showClient(string nif) {
 		for (int i = 1; i < clients[index].getPacketList().size(); i++) {
 			cout << " ; " << clients[index].getPacketList().at(i);
 		}
-		cout << endl << "\tDinheiro Gasto: " << clients[index].getMoneySpent();
 		cout << endl << "\t----------------------------------------------------------------------" << endl << endl;
 	}
 	cout << "\tPresse ENTER para recuar...";
@@ -521,7 +508,7 @@ void Agency::showClient(string nif) {
 void Agency::removeTravelPack(string id) {
 	int index;
 	bool found = false;
-	if (id == ":q") return;
+	if(id == ":q") return;
 	do {
 		for (int i = 0; i < packets.size(); i++)
 			if (packets[i].getId() == id) {
@@ -538,12 +525,12 @@ void Agency::removeTravelPack(string id) {
 			}else{
 			  last_id = packets[packets.size()-1].getId();
 			}*/
-			cout << "\tPack removido com sucesso!" << endl;
+			cout << "\tPack removido com sucesso." << endl;
 		}
 		else {
 			cout << "\tNao existe nenhum pack com esse ID, escolha outro: ";
 			getline(cin, id);
-			if (id == ":q") return;
+			if(id == ":q") return;
 		}
 	} while (!found);
 	updatePacksFile();
@@ -553,7 +540,7 @@ void Agency::removeTravelPack(string id) {
 void Agency::editTravelPack(string id) {
 	int index;
 	bool found = false;
-	if (id == ":q") return;
+	if(id == ":q") return;
 	do {
 		for (int i = 0; i < packets.size(); i++)
 			if (packets[i].getId() == id) {
@@ -568,11 +555,11 @@ void Agency::editTravelPack(string id) {
 			cout << "\t|\t[1] Modificar Id\t\t\t|" << endl;
 			cout << "\t|\t[2] Modificar local\t\t\t|" << endl;
 			cout << "\t|\t[3] Modificar data inicial\t\t|" << endl;
-			cout << "\t|\t[4] Modificar data final\t\t|" << endl;
+			cout << "\t|\t[4] Modificar data final\t\t|" << endl;			
 			cout << "\t|\t[5] Modificar preco por pessoa\t\t|" << endl;
 			cout << "\t|\t[6] Modificar bilhetes maximos\t\t|" << endl;
-			cout << "\t|\t[7] Modificar bilhetes comprados\t|" << endl;
-			cout << "\t|\t[8] Retroceder\t\t\t\t|" << endl;
+			cout << "\t|\t[7] Modificar bilhetes comprados\t|" << endl;		
+			cout << "\t|\t[8] Retroceder\t\t\t\t|" << endl;			
 			cout << "\t|\t\t\t\t\t\t|" << endl;
 			cout << "\t|\t[0] SAIR\t\t\t\t|" << endl;
 			cout << "\t|_______________________________________________|" << endl << endl;
@@ -589,8 +576,8 @@ void Agency::editTravelPack(string id) {
 	string value;
 	getline(cin, edit);
 
-	if (edit == "8" || edit == ":q") return;
-	if (edit == "0") exit(0);
+	if(edit == ":q") return;
+
 	do {
 		vector<string> places_arr;
 		vector<string> date_arr;
@@ -679,12 +666,10 @@ void Agency::editTravelPack(string id) {
 		}
 		else {
 			found = false;
-			cout << "\tInsira um dado valido : ";
+			cout << "\tCertifique-se que selecionou uma opcao correta: ";
 			getline(cin, edit);
-			if (edit == ":q") return;
 		}
 	} while (!found);
-	cout << "Alteracao efetuada com sucesso!" << endl;
 	updatePacksFile();
 }
 
@@ -696,7 +681,7 @@ void Agency::createTravelPack() {
 	vector<string> places;
 	vector<string> begin_date_arr;
 	vector<string> end_date_arr;
-
+	
 	packsFile.open(packs_file, std::ios_base::app);
 	if (packets.size() != 0) {
 		text.push_back("::::::::::");
@@ -711,33 +696,33 @@ void Agency::createTravelPack() {
 	cout << "\to   --------------------------------------------------------------------- o" << endl << endl;
 	cout << "\tID do pack: ";
 	getline(cin, id);
-	if (id == ":q") return;
+	if(id == ":q") return;
 	text.push_back(id);
 	cout << "\tLocal/locais turistico(s): ";
 	getline(cin, local);
-	if (local == ":q") return;
+	if(local == ":q") return;
 	text.push_back(local);
 	cout << "\tData de inicio da viagem: ";
 	getline(cin, beginDate);
-	if (beginDate == ":q") return;
+	if(beginDate == ":q") return;
 	text.push_back(beginDate);
 	cout << "\tData de fim da viagem: ";
 	getline(cin, endDate);
-	if (endDate == ":q") return;
+	if(endDate == ":q") return;
 	text.push_back(endDate);
 	cout << "\tPreco por pessoa: ";
 	getline(cin, price);
-	if (price == ":q") return;
+	if(price == ":q") return;
 	text.push_back(price);
 	cout << "\tBilhetes disponiveis: ";
 	getline(cin, avail);
-	if (avail == ":q") return;
+	if(avail == ":q") return;
 	text.push_back(avail);
 	cout << "\tBilhetes comprados: ";
 	getline(cin, bought);
-	if (bought == ":q") return;
+	if(bought == ":q") return;
 	text.push_back(bought);
-
+	
 	Date bDate(beginDate), eDate(endDate);
 	bool next = true;
 	while (true) {
@@ -755,44 +740,44 @@ void Agency::createTravelPack() {
 		if (next) break;
 	}
 	while (!strIsInt(id)) {
-		cout << "ID nï¿½o ï¿½ um nï¿½mero! Insira um novo ID: ";
+		cout << "ID não é um número! Insira um novo ID: ";
 		getline(cin, id);
 		if (id == ":q") return;
 		text[1 + offset] = id;
 	}
 	while (!bDate.isValid()) {
-		cout << "Data de inï¿½cio de viagem invï¿½lida! Insira uma nova data com o seguinte formato aaaa/mm/dd: ";
-		getline(cin, beginDate);
+		cout << "Data de início de viagem inválida! Insira uma nova data com o seguinte formato aaaa/mm/dd: ";
+		getline(cin,beginDate);
 		if (beginDate == ":q") return;
 		bDate.setDate(beginDate);
 		text[3 + offset] = beginDate;
 	}
 	while (!eDate.isValid()) {
-		cout << "Data de fim de viagem invï¿½lida! Insira uma nova data com o seguinte formato aaaa/mm/dd: ";
+		cout << "Data de fim de viagem inválida! Insira uma nova data com o seguinte formato aaaa/mm/dd: ";
 		getline(cin, endDate);
 		if (endDate == ":q") return;
 		eDate.setDate(endDate);
 		text[4 + offset] = endDate;
 	}
 	while (!strIsInt(price)) {
-		cout << "Preï¿½o nï¿½o ï¿½ um nï¿½mero! Insira um novo preï¿½o: ";
+		cout << "Preço não é um número! Insira um novo preço: ";
 		getline(cin, price);
 		if (price == ":q") return;
 		text[5 + offset] = price;
 	}
 	while (!strIsInt(avail)) {
-		cout << "O valor de Bilhetes disponï¿½veis inseridos nao ï¿½ um nï¿½mero! Insira um novo valor: ";
+		cout << "O valor de Bilhetes disponíveis inseridos nao é um número! Insira um novo valor: ";
 		getline(cin, avail);
 		if (avail == ":q") return;
 		text[6 + offset] = avail;
 	}
 	while (!strIsInt(bought)) {
-		cout << "O valor de Bilhetes comprados inseridos nao ï¿½ um nï¿½mero! Insira um novo valor: ";
+		cout << "O valor de Bilhetes comprados inseridos nao é um número! Insira um novo valor: ";
 		getline(cin, bought);
 		if (bought == ":q") return;
 		text[7 + offset] = bought;
 	}
-
+	
 	string places_str = text[2 + offset];
 	string begin_date_str = text[3 + offset];
 	string end_date_str = text[4 + offset];
@@ -835,7 +820,6 @@ void Agency::createTravelPack() {
 		packsFile << text[i] << endl;
 	}
 	packsFile.close();
-	cout << "Pacote adicionado com sucesso!" << endl;
 }
 
 void Agency::removeClient(string nif) {
@@ -850,7 +834,7 @@ void Agency::removeClient(string nif) {
 			}
 		if (found) {
 			clients.erase(clients.begin() + id);
-			cout << "\tCliente removido com sucesso!" << endl;
+			cout << "\tCliente removido com sucesso." << endl;
 		}
 		else {
 			cout << "\tNao existe nenhum cliente com esse NIF, escolha outro: ";
@@ -877,10 +861,9 @@ void Agency::editClient(string nif) {
 			cout << "\t|\t[1] Modificar Nome\t\t\t|" << endl;
 			cout << "\t|\t[2] Modificar NIF\t\t\t|" << endl;
 			cout << "\t|\t[3] Modificar Agregado Familiar\t\t|" << endl;
-			cout << "\t|\t[4] Modificar Morada\t\t\t|" << endl;
-			cout << "\t|\t[5] Modificar Pacotes\t\t\t|" << endl;
-			cout << "\t|\t[6] Modificar Dinheiro Gasto\t\t\t\t|" << endl;
-			cout << "\t|\t[7] Retroceder\t\t\t\t|" << endl;
+			cout << "\t|\t[4] Modificar Morada\t\t\t|" << endl;			
+			cout << "\t|\t[5] Modificar Pacotes\t\t\t|" << endl;			
+			cout << "\t|\t[6] Retroceder\t\t\t\t|" << endl;			
 			cout << "\t|\t\t\t\t\t\t|" << endl;
 			cout << "\t|\t[0] SAIR\t\t\t\t|" << endl;
 			cout << "\t|_______________________________________________|" << endl << endl;
@@ -895,7 +878,7 @@ void Agency::editClient(string nif) {
 	string edit;
 	string value;
 	getline(cin, edit);
-	if (edit == ":q" || edit == "7") return;
+	if (edit == ":q" || edit == "6") return;
 	if (edit == "0") exit(0);
 	do {
 		if (edit == "1") {
@@ -987,19 +970,12 @@ void Agency::editClient(string nif) {
 					else {
 						cout << "Certifique-se que escreva o ID do pacote e se tiver mais que um, separe-os por ';' : ";
 					}
-				} while (!accepted);
+				} while (!accepted);				
 				vector<string> clientPacks = clients[id].getPacketList();
 				for (int j = 0; j < packs_arr.size(); j++)
 					eraseInVecStr(clientPacks, packs_arr[j]);
 				clients[id].setPacketList(clientPacks);
 			}
-		}
-		else if (edit == "6") {
-			found = true;
-			cout << "\tValor de dinheiro gasto antigo: " << clients[id].getVATnumber() << endl;
-			cout << "\tValor novo: ";
-			getline(cin, value);
-			clients[id].setVATnumber(value);
 		}
 		else {
 			found = false;
@@ -1007,21 +983,20 @@ void Agency::editClient(string nif) {
 			getline(cin, edit);
 		}
 	} while (!found);
-	cout << "Alteracao efetuada com sucesso!" << endl;
 	updateClientsFile();
 }
 
 void Agency::createClient() {
 	ofstream clientsFile;
-	string name, nif, family, address_str, packs_str, moneySpentStr, line;
-	int offset = -1, moneySpent = 0;
+	string name, nif, family, address_str, packs_str, line;
+	int offset = -1;
 	vector<string> text;
 	vector<string> client_address_arr;
 	vector<string> packs_arr;
 	Address client_address;
 
 	if (clients.size() != 0) {
-		text.push_back("::::::::::");
+		text.push_back("\n::::::::::");
 		offset = 0;
 	}
 	cout << "\t,-, --------------------------------------------------------------------- ,-," << endl;
@@ -1029,41 +1004,39 @@ void Agency::createClient() {
 	cout << "\to   --------------------------------------------------------------------- o" << endl << endl;
 	cout << "\tNome do cliente: ";
 	getline(cin, name);
-	if (name == ":q") return;
+	if(name == ":q") return;
 	text.push_back(name);
 	cout << "\tNIF do cliente: ";
 	getline(cin, nif);
-	if (nif == ":q") return;
+	if(nif == ":q") return;
 	text.push_back(nif);
 	cout << "\tAgregado familiar: ";
 	getline(cin, family);
-	if (family == ":q") return;
+	if(family == ":q") return;
 	text.push_back(family);
 	cout << "\tMorada: ";
 	getline(cin, address_str);
-	if (address_str == ":q") return;
+	if(address_str == ":q") return;
 	text.push_back(address_str);
 	cout << "\tPacote(s) turistico(s) (Se inserir mais que um separe-os por ';'): " << endl;
 	showTps(packets);
 	cout << "\tOpcao: ";
 	getline(cin, packs_str);
-	if (packs_str == ":q") return;
+	if(packs_str == ":q") return;
 	text.push_back(packs_str);
-
 
 	string places_str = text[5 + offset];
 
 	size_t found_1 = text[5 + offset].find_first_of(';');
 	parseText(text[5 + offset], found_1, packs_arr, ';');
-
 	while (!strIsInt(nif)) {
-		cout << "NIF nao e um numero! Insira um novo NIF: ";
+		cout << "NIF não é um número! Insira um novo NIF: ";
 		getline(cin, nif);
 		if (nif == ":q") return;
 		text[2 + offset] = nif;
 	}
 	while (!strIsInt(family)) {
-		cout << "Agregado familiar nao e um numero! Insira um novo valor: ";
+		cout << "Agregado familiar não é um número! Insira um novo valor: ";
 		getline(cin, family);
 		if (family == ":q") return;
 		text[3 + offset] = family;
@@ -1079,31 +1052,24 @@ void Agency::createClient() {
 		else {
 			cout << "\tMorada invalida! Escreva a morada no seguinte formato [rua] / [porta] / [andar] / [codigo postal] / [cidade]: ";
 			getline(cin, address_str);
-			if (address_str == ":q") return;
+			if(address_str == ":q") return;
 			text[4 + offset] = address_str;
 			client_address_arr.clear();
 		}
-	}
-	//while ï¿½ verificaï¿½ï¿½o se a morada tem 4 barras
+	}		
+									//while é verificação se a morada tem 4 barras
 	for (int i = 0; i < packs_arr.size(); i++) {
 		for (int j = 0; j < packs_arr[i].size(); j++) {
 			while (true) {
 				if (packs_arr[i][j] < 48 || packs_arr[i][j] > 57) {
-					cout << "Pack comprado inserido nao e um numero! Por favor insira um pacote valido(:q para retroceder): ";
+					cout << "Pack comprado inserido não é um número! Por favor insira um pack válido(:q para retroceder): ";
 					getline(cin, line);
 					if (line == ":q") return;
 					packs_arr[i] = line;
 					continue;
 				}
 				if (!numberIsID(stoi(packs_arr[i]))) {
-					cout << "Pack comprado inserido nao existe! Por favor insira um pacote valido(:q para retroceder): ";
-					getline(cin, line);
-					if (line == ":q") return;
-					packs_arr[i] = line;
-					continue;
-				}
-				if (!purchaseIsPossible(family, packets[findTpByID(packs_arr[i])])) {
-					cout << "Nao ha bilhetes disponiveis neste pacote! Por favor insira um pacote valido(:q para retroceder): ";
+					cout << "Pack comprado inserido não existe! Por favor insira um pack válido(:q para retroceder): ";
 					getline(cin, line);
 					if (line == ":q") return;
 					packs_arr[i] = line;
@@ -1113,14 +1079,7 @@ void Agency::createClient() {
 			}
 		}
 	}
-	//for ï¿½ verificaï¿½ï¿½o dos packs
-
-	for (int i = 0; i < packs_arr.size(); i++) {
-		moneySpent += stoi(family) * stoi(getTpPriceByID(packs_arr[i]));
-	}
-	moneySpentStr = to_string(moneySpent);
-	text.push_back(moneySpentStr);
-
+									//for é verificação dos packs
 	for (int i = 0; i < packs_arr.size(); i++) {
 		for (int j = 0; j < packets.size(); j++) {
 			if (packs_arr[i] == packets[j].getId()) {
@@ -1129,18 +1088,16 @@ void Agency::createClient() {
 			}
 		}
 	}
-	updatePacksFile();
-	Client client = Client(text[1 + offset], text[2 + offset], text[3 + offset], client_address, packs_arr, moneySpentStr);
+	Client client = Client(text[1 + offset], text[2 + offset], text[3 + offset], client_address, packs_arr);
 	clients.push_back(client);
-
-
+	
 	clientsFile.open(clients_file, std::ios_base::app);
 	for (int i = 0; i < text.size(); i++)
 		clientsFile << text[i] << endl;
 
 	clientsFile.close();
 	cout << "\tCliente adicionado com sucesso!\n";
-
+	
 }
 
 void Agency::setName(string name) {
@@ -1208,40 +1165,32 @@ void Agency::buyTravelPack(string nif) {
 
 	cout << endl << "Escolha pack a comprar (escreva :q para cancelar): ";
 	string option;
-	bool print = true;			//Para ver se imprime o "Esse ID nao existe! Insira um novo ID:"
 	bool accepted = false;
 	while (!accepted) {
 		getline(cin, option);
 		if (option == ":q") return;
-		for (int i = 0; i < packets.size(); i++) {
+		for (int i = 0; i < packets.size(); i++)
 			if (option == packets[i].getId()) {
 				string agregated = clients[index].getFamilySize();
 				if (stoi(packets[i].getBoughtTickets()) + stoi(agregated) <= stoi(packets[i].getMaxPersons())) {
-					int index_1 = findTpByID(option);
+					int index_1 = findTpByID(packets[i].getId());
 					packets[index_1].setBoughtTickets(to_string(stoi(tps_arr[i].getBoughtTickets()) + stoi(agregated)));
-					if (packets[index_1].getBoughtTickets() == packets[index_1].getMaxPersons()) packets[index_1].setId("-" + packets[index_1].getId()); //Se os packs esgotarem, colocar o id a menos
+					if (!purchaseIsPossible(clients[index], packets[index_1])) {
+						accepted = false;
+						break;
+					}
+					if (packets[index_1].getBoughtTickets() == packets[index_1].getMaxPersons()) packets[index_1].setId("-" + packets[index_1].getId());
 					vector<string> id_packs_temp = clients[index].getPacketList();
-					id_packs_temp.push_back(option);
+					id_packs_temp.push_back(packets[index_1].getId());
 					clients[index].setPacketList(id_packs_temp);
 					accepted = true;
 					updatePacksFile();
 					updateClientsFile();
 				}
-				else {
-					cout << "Esse pacote nao tem bilhetes suficientes para a familia do cliente!. Insira um novo ID: ";
-					accepted = false;
-					print = false;
-					break;														
-				}
 			}
-		}
-		if (accepted) {
-			cout << "Compra efetuada com sucesso!" << endl;
-			break;
-		}
-		else if (!accepted && print) {
-			cout << "Esse ID nao existe! Insira um novo ID: ";
-		}
+		if (accepted) break;
+		cout << accepted << endl;
+		cout << "Escolha outra opcao: ";
 	}
 }
 
@@ -1257,18 +1206,18 @@ bool Agency::numberIsID(int n)
 	return result;
 }
 
-bool Agency::purchaseIsPossible(string family, Packet pack) const
+bool Agency::purchaseIsPossible(Client client, Packet pack) const
 {
-	if ((stoi(pack.getMaxPersons()) - stoi(pack.getBoughtTickets())) >= stoi(family)) return true;
+	if ((stoi(pack.getMaxPersons()) - stoi(pack.getBoughtTickets())) >= stoi(client.getFamilySize())) return true;
 	return false;
 }
 
 Client Agency::getClientByNif(string nif)
 {
-	string letterNotFound = "0";
-	vector<string> vecNotFound = { "0" };																			//Teve que ser assim que nï¿½o funcionava de
+	string letterNotFound;																							
+	vector<string> vecNotFound = { "0" };																			//Teve que ser assim que não funcionava de
 	Address addressNotFound(letterNotFound, letterNotFound, letterNotFound, letterNotFound, letterNotFound);		//	outra maneira.
-	Client notFound(letterNotFound, letterNotFound, letterNotFound, addressNotFound, vecNotFound, letterNotFound);
+	Client notFound(letterNotFound, letterNotFound, letterNotFound, addressNotFound, vecNotFound);
 	for (int i = 0; i < clients.size(); i++) {
 		if (clients[i].getVATnumber() == nif) return clients[i];
 	}
@@ -1292,7 +1241,6 @@ void Agency::updateClientsFile() {
 				clientsFile << clients[i].getPacketList().at(j) << " ; ";
 			}
 		}
-		clientsFile << clients[i].getMoneySpent() << endl;
 		if (i != clients.size() - 1) clientsFile << "::::::::::" << endl;
 	}
 	clientsFile.close();
@@ -1329,16 +1277,3 @@ void Agency::updatePacksFile() {
 	}
 	packsFile.close();
 }
-
-string Agency::calcTotalMoneySpent(Client client) {
-	int total = 0;
-	vector<string> clientPacks = client.getPacketList();
-	string price;
-	for (int i = 0; i < clientPacks.size(); i++) {
-		price = getTpPriceByID(clientPacks[i]);
-		total += stoi(price) * stoi(client.getFamilySize());
-	}
-	return to_string(total);
-}
-
-

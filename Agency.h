@@ -31,7 +31,6 @@ public:
 	// methods GET
 	vector<Packet> cleanOrganizedPackets() const;
 	int findTpByID(string id) const;
-	string getTpPriceByID(string id) const;
 	string getName() const;
 	string getVATnumber() const;
 	Address getAddress() const;
@@ -69,9 +68,8 @@ public:
 	void updateClientsFile();
 	void buyTravelPack(string nif);
 	bool numberIsID(int n);
-	bool purchaseIsPossible(string family, Packet pack) const;
+	bool purchaseIsPossible(Client client, Packet pack) const;
 	Client getClientByNif(string nif);
-	string calcTotalMoneySpent(Client client);
 
 	// methods SET
 	void setName(string name);
@@ -80,6 +78,5 @@ public:
 	void setURL(string url);
 	void setClients(vector<Client>& clients);
 	void setPackets(vector<Packet>& packets);
-	
 
 };

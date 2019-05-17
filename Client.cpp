@@ -2,13 +2,12 @@
 
 Client::Client() {}
 
-Client::Client(string name, string VATnumber, string familySize, Address address, vector<string> id_packs, string moneySpent) {
+Client::Client(string name, string VATnumber, string familySize, Address address, vector<string> id_packs) {
 	this->name = name;
 	this->VATnumber = VATnumber;
 	this->familySize = familySize;
 	this->address = address;
 	this->id_packs = id_packs;
-	this->moneySpent = moneySpent;
 }
 
 // GET methods
@@ -33,10 +32,6 @@ vector<string> Client::getPacketList() const {
 	return id_packs;
 }
 
-string Client::getMoneySpent() const {
-	return moneySpent;
-}
-
 // metodos SET
 
 void Client::setName(string name) {
@@ -57,8 +52,4 @@ void Client::setAddress(Address address) {
 
 void Client::setPacketList(vector<string> id_packs) {
 	this->id_packs = id_packs;
-}
-
-void Client::setMoneySpent(string moneySpent) {
-	this->moneySpent = moneySpent;
 }

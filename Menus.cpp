@@ -394,7 +394,7 @@ unsigned mainMenu(Agency & agency) {
 	cout << "\tURL:\t\t" << agency.getURL() << "\t\t\t        .@@@" << endl;
 	cout << "\tEndereco:\t" << agency.getAddress().getStreet() << " / " << agency.getAddress().getDoorNumber() << " / " << agency.getAddress().getFloor() << " / " << agency.getAddress().getPostalCode() << " / " << agency.getAddress().getLocation() << "\t         :@@@:" << endl;
 	cout << "\t\t\t\t\t\t\t\t\t18.       @@@@@" << endl;
-	cout << "\tPacotes vendidos: \t" << agency.totalTravelPacksBought() << "\t\t\t\t\t @@O      ;@@@@@;" << endl << "\tValor total: \t\t" << agency.totalIncome() << std::left << std::setfill(' ') << std::setw(37) << " Euros" << ":@@@@@@OftfffftfG@@@@@@l>" << endl; 
+	cout << "\tPacotes vendidos: \t" << agency.totalTravelPacksBought() << "\t\t\t\t\t @@O      ;@@@@@;" << endl << "\tValor total: \t\t" << agency.totalIncome() << std::left << std::setfill(' ') << std::setw(37) << " Euros" << ":@@@@@@OftfffftfG@@@@@@l>" <<  endl;
 	cout << "\t _______________________________________________" << "\t\t @@O      :@@@@@:" << endl;
 	cout << "\t|\t\t\t\t\t\t|" << "\t\tt8.       @@@@8" << endl;
 	cout << "\t|\t[1] Gestao de clientes\t\t\t|" << "\t\t        1@@@," << endl;
