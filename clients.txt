@@ -1,23 +1,20 @@
-Joao Sousa
-691995741
-2
-Rue Xavier Brasseur / 07 / - / 8125-633 / Esch-sur-Alzette
-1 ; 2 ; -6 ; 8 ; -9
-::::::::::
-Antonio Sousa
-691553412
-2
-Casa do Carmo / 12 / 12 / 691-123 / Esch-sur-Alzette
-5 ; 1 ; 2 ; 8
-::::::::::
-Catia Sousa
-691840850
+Joao
+123456789
 3
-Rua mal empregue / 16 / - / 1546-568 / Esch-sur-Alzette
-2 ; 3 ; -9
+a / a / a / a / a
+-1 ; 2
+6000
 ::::::::::
-Antonio Fonseca
-201304567
-5
-Rua peixoto Cabral / 69 / - / 565-71238 / Lisboa
-1
+Miguel
+987654321
+3
+b / b / b / b / b
+-1
+6000
+::::::::::
+Tiago
+123459876
+3
+c / c / c / c / c
+2 ; 2
+9000
