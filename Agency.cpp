@@ -831,6 +831,7 @@ void Agency::createTravelPack() {
 		packsFile << text[i] << endl;
 	}
 	packsFile.close();
+	cout << "Pacote adicionado com sucesso!" << endl;
 }
 
 void Agency::removeClient(string nif) {
