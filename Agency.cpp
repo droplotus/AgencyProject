@@ -1052,13 +1052,13 @@ void Agency::createClient() {
 	parseText(text[5 + offset], found_1, packs_arr, ';');
 
 	while (!strIsInt(nif)) {
-		cout << "NIF n�o � um n�mero! Insira um novo NIF: ";
+		cout << "NIF nao e um numero! Insira um novo NIF: ";
 		getline(cin, nif);
 		if (nif == ":q") return;
 		text[2 + offset] = nif;
 	}
 	while (!strIsInt(family)) {
-		cout << "Agregado familiar n�o � um n�mero! Insira um novo valor: ";
+		cout << "Agregado familiar nao e um numero! Insira um novo valor: ";
 		getline(cin, family);
 		if (family == ":q") return;
 		text[3 + offset] = family;
@@ -1084,21 +1084,21 @@ void Agency::createClient() {
 		for (int j = 0; j < packs_arr[i].size(); j++) {
 			while (true) {
 				if (packs_arr[i][j] < 48 || packs_arr[i][j] > 57) {
-					cout << "Pack comprado inserido n�o � um n�mero! Por favor insira um pacote v�lido(:q para retroceder): ";
+					cout << "Pack comprado inserido nao e um numero! Por favor insira um pacote valido(:q para retroceder): ";
 					getline(cin, line);
 					if (line == ":q") return;
 					packs_arr[i] = line;
 					continue;
 				}
 				if (!numberIsID(stoi(packs_arr[i]))) {
-					cout << "Pack comprado inserido n�o existe! Por favor insira um pacote v�lido(:q para retroceder): ";
+					cout << "Pack comprado inserido nao existe! Por favor insira um pacote valido(:q para retroceder): ";
 					getline(cin, line);
 					if (line == ":q") return;
 					packs_arr[i] = line;
 					continue;
 				}
 				if (!purchaseIsPossible(family, packets[findTpByID(packs_arr[i])])) {
-					cout << "Nao ha bilhetes disponiveis neste pacote! Por favor insira um pacote v�lido(:q para retroceder): ";
+					cout << "Nao ha bilhetes disponiveis neste pacote! Por favor insira um pacote valido(:q para retroceder): ";
 					getline(cin, line);
 					if (line == ":q") return;
 					packs_arr[i] = line;
@@ -1223,7 +1223,7 @@ void Agency::buyTravelPack(string nif) {
 					updateClientsFile();
 				}
 				else {
-					cout << "Essse pacote nao tem bilhetes suficientes para a familia do cliente!. Insira um novo ID: ";
+					cout << "Esse pacote nao tem bilhetes suficientes para a familia do cliente!. Insira um novo ID: ";
 					accepted = false;
 					print = false;
 					break;														
