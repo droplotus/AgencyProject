@@ -106,3 +106,9 @@ void eraseInVecStr(vector<string>& vec, string elem) {
 	}
 }
 
+int findInVecVec1Str(vector<vector<string>> vec, string elem) {
+	for (int i = 0; i < vec.size(); i++) {
+		if (elem == vec[i][0]) return i;
+	}
+	return -1;
+}

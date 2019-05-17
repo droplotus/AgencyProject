@@ -114,7 +114,8 @@ bool Date::operator<=(Date right)
 }
 
 bool Date::isValid() {
-	if (!strIsInt(year) || !strIsInt(month) || !strIsInt(day)) return false;
+	if (!strIsInt(year) || !strIsInt(month) || !strIsInt(day) || (stoi(month) > 12 || stoi(month) < 1) || (stoi(day) > 31 || stoi(day) < 1)) 
+		return false;
 	return true;
 }
 

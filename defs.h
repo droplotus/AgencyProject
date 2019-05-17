@@ -29,3 +29,4 @@ bool strIsDate(string date);
 
 void eraseInVecStr(vector<string>& vec, string elem);
 
+int findInVecVec1Str(vector<vector<string>> vec, string elem);

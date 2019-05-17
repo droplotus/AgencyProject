@@ -104,7 +104,7 @@ void Agency::showTps(vector<Packet> tps_arr) {
 
 int Agency::findTpByID(string id) const {
 	for (int i = 0; i < packets.size(); i++)
-		if (packets[i].getId() == id) return i;
+		if (packets[i].getId() == id || packets[i].getId() == "-" + id) return i;
 	return -1;
 }
 
@@ -277,8 +277,9 @@ Agency::Agency(vector<Client> & clients, vector<Packet> & packets, string & last
 // metodos GET
 vector<Packet> Agency::cleanOrganizedPackets() const {
 	Packet temp;
-	vector<Packet> new_packets = packets;
-	// adding replicates BoughtTickets + removing replicates
+	vector<Packet> new_packets = packets, aux2;
+	vector<vector<string>> aux, aux1;
+	 //adding replicates BoughtTickets + removing replicates
 	for (int i = new_packets.size() - 1; i > 0; i--)
 		for (int j = i - 1; j >= 0; j--)
 			if (new_packets[j].getSites().at(0) == new_packets[i].getSites().at(0)) {
@@ -286,7 +287,22 @@ vector<Packet> Agency::cleanOrganizedPackets() const {
 				new_packets.erase(new_packets.begin() + i);
 				break;
 			}
-
+	/*for (int i = 0; i < new_packets.size(); i++) {
+		for (int j = 0; j < new_packets[i].getSites().size(); j++) {
+			aux.push_back({ new_packets[i].getSites()[j], new_packets[i].getBoughtTickets() , new_packets[i].getId() });
+		}
+	}
+	for (int i = 1; i < aux.size(); i++) {
+		if (findInVecVec1Str(aux1, aux[i][0]) == -1) {
+			aux1.push_back({ aux[i][0],aux[i][1] , aux[i][2]});
+		}
+		else {
+			aux1[findInVecVec1Str(aux1, aux[i][0])][1] += aux[i][1];
+		}
+	}
+	for (int i = 0; i < aux1.size(); i++) {
+		new_packets[findTpByID(aux1[i][2])].setBoughtTickets(aux1[i][1]);
+	}*/
 	// sorting algorithm
 	for (int i = 0; i < new_packets.size(); i++)
 		for (int j = i + 1; j < new_packets.size(); j++)
@@ -880,7 +896,7 @@ void Agency::editClient(string nif) {
 			cout << "\t|\t[3] Modificar Agregado Familiar\t\t|" << endl;
 			cout << "\t|\t[4] Modificar Morada\t\t\t|" << endl;
 			cout << "\t|\t[5] Modificar Pacotes\t\t\t|" << endl;
-			cout << "\t|\t[6] Modificar Dinheiro Gasto\t\t\t\t|" << endl;
+			cout << "\t|\t[6] Modificar Dinheiro Gasto\t\t\t|" << endl;
 			cout << "\t|\t[7] Retroceder\t\t\t\t|" << endl;
 			cout << "\t|\t\t\t\t\t\t|" << endl;
 			cout << "\t|\t[0] SAIR\t\t\t\t|" << endl;
@@ -904,6 +920,7 @@ void Agency::editClient(string nif) {
 			cout << "\tNome antigo: " << clients[id].getName() << endl;
 			cout << "\tEscolha um nome novo: ";
 			getline(cin, value);
+			if (value == ":q") return;
 			clients[id].setName(value);
 		}
 		else if (edit == "2") {
@@ -911,6 +928,7 @@ void Agency::editClient(string nif) {
 			cout << "\tNif antigo: " << clients[id].getVATnumber() << endl;
 			cout << "\tEscolha um nif novo: ";
 			getline(cin, value);
+			if (value == ":q") return;		
 			clients[id].setVATnumber(value);
 		}
 		else if (edit == "3") {
@@ -918,6 +936,7 @@ void Agency::editClient(string nif) {
 			cout << "\tAgregado familiar antigo: " << clients[id].getFamilySize() << endl;
 			cout << "\tEscolha um agregado familiar novo: ";
 			getline(cin, value);
+			if (value == ":q") return;
 			clients[id].setFamilySize(value);
 		}
 		else if (edit == "4") {
@@ -928,6 +947,7 @@ void Agency::editClient(string nif) {
 			bool accepted = false;
 			do {
 				getline(cin, value);
+				if (value == ":q") return;
 				size_t found_1 = value.find_first_of('/');
 				parseText(value, found_1, address_arr, '/');
 				if (address_arr.size() == 5) {
@@ -997,10 +1017,10 @@ void Agency::editClient(string nif) {
 		}
 		else if (edit == "6") {
 			found = true;
-			cout << "\tValor de dinheiro gasto antigo: " << clients[id].getVATnumber() << endl;
+			cout << "\tValor de dinheiro gasto antigo: " << clients[id].getMoneySpent() << endl;
 			cout << "\tValor novo: ";
 			getline(cin, value);
-			clients[id].setVATnumber(value);
+			clients[id].setMoneySpent(value);
 		}
 		else {
 			found = false;
@@ -1219,12 +1239,13 @@ void Agency::buyTravelPack(string nif) {
 				string agregated = clients[index].getFamilySize();
 				if (stoi(packets[i].getBoughtTickets()) + stoi(agregated) <= stoi(packets[i].getMaxPersons())) {
 					int index_1 = findTpByID(option);
-					packets[index_1].setBoughtTickets(to_string(stoi(tps_arr[i].getBoughtTickets()) + stoi(agregated)));
+					packets[index_1].setBoughtTickets(to_string(stoi(packets[i].getBoughtTickets()) + stoi(agregated)));
 					if (packets[index_1].getBoughtTickets() == packets[index_1].getMaxPersons()) packets[index_1].setId("-" + packets[index_1].getId()); //Se os packs esgotarem, colocar o id a menos
 					vector<string> id_packs_temp = clients[index].getPacketList();
 					id_packs_temp.push_back(option);
 					clients[index].setPacketList(id_packs_temp);
 					accepted = true;
+					clients[index].setMoneySpent(calcTotalMoneySpent(clients[index]));
 					updatePacksFile();
 					updateClientsFile();
 				}
