@@ -534,7 +534,7 @@ void Agency::removeTravelPack(string id) {
 			}else{
 			  last_id = packets[packets.size()-1].getId();
 			}*/
-			cout << "\tPack removido com sucesso." << endl;
+			cout << "\tPack removido com sucesso!" << endl;
 		}
 		else {
 			cout << "\tNao existe nenhum pack com esse ID, escolha outro: ";
@@ -845,7 +845,7 @@ void Agency::removeClient(string nif) {
 			}
 		if (found) {
 			clients.erase(clients.begin() + id);
-			cout << "\tCliente removido com sucesso." << endl;
+			cout << "\tCliente removido com sucesso!" << endl;
 		}
 		else {
 			cout << "\tNao existe nenhum cliente com esse NIF, escolha outro: ";
