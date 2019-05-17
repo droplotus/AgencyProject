@@ -1200,7 +1200,7 @@ void Agency::buyTravelPack(string nif) {
 		return;
 	}
 
-	cout << endl << "Escolha pack a comprar: ";
+	cout << endl << "Escolha pack a comprar (escreva :q para cancelar): ";
 	string option;
 	bool accepted = false;
 	while (!accepted) {
